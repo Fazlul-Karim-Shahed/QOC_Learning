@@ -7,9 +7,8 @@ const compression = require('compression')
 const _ = require('lodash')
 const path = require('path')
 // const UserRouter = require('./Routers/UserRouter')
-// const ShareholderRouter = require('./Routers/ShareholderRouter')
-// const EmployeeRouter = require('./Routers/EmployeeRouter')
-// const PropertiesRouter = require('./Routers/PropertiesRouter')
+
+
 
 // ------------ Configuration ------------  //
 
@@ -49,9 +48,6 @@ mongoose.connect(DB, {
 
 // ------------ All Routers ------------ //
 // app.use('/api/users', UserRouter)
-// app.use('/api/shareholder', ShareholderRouter)
-// app.use('/api/employee', EmployeeRouter)
-// app.use('/api/properties', PropertiesRouter)
 
 app.get('/api', (req, res) => {
     res.send({ message: 'Hey backend is here!!', error: false })
