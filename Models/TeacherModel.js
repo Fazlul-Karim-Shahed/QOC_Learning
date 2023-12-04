@@ -21,7 +21,7 @@ const TeacherModel = model('Teacher', Schema({
     grading: { type: Number },
     useQocExam: { type: Number, default: 0, required: true },
     checkQocExam: { type: Number, default: 0, required: true },
-    contactAgree: { type: Boolean, default: false, required: true },    
+    contactAgree: { type: Boolean, default: false, required: true },
     institution: { type: String }
 
 

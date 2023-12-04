@@ -24,6 +24,7 @@ const createJob = async (req, res) => {
         .catch(err => {
             res.status(500).send({ message: 'Job Created Error', error: true, data: err.message })
         })
+        
 
 
 }
