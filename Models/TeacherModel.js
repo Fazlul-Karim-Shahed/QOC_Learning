@@ -9,7 +9,8 @@ const TeacherModel = model('Teacher', Schema({
         type: String,
         max: 1024,
         min: 6,
-        required: true
+        required: true,
+        
     },
     role: {
         type: String,
