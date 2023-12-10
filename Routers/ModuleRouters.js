@@ -1,11 +1,11 @@
 
-const { addModule } = require('../Controllers/ModuleController/addModule')
+const { createModule } = require('../Controllers/ModuleController/createModule')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 
 const router = require('express').Router()
 
-router.post('/', roleCheck('admin') ,addModule)
+router.post('/', roleCheck('admin') ,createModule)
 
 
 module.exports = router

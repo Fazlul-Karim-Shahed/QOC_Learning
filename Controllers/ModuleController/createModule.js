@@ -5,7 +5,7 @@ const _ = require('lodash')
 const { IncomingForm } = require('formidable')
 
 
-const addModule = async (req, res) => {
+const createModule = async (req, res) => {
 
     let form = new IncomingForm()
     form.keepExtensions = true
@@ -95,5 +95,5 @@ const addModule = async (req, res) => {
 }
 
 
-module.exports.addModule = addModule
+module.exports.createModule = createModule
 

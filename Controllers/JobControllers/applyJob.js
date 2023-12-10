@@ -8,14 +8,10 @@ const applyJob = async (req, res) => {
 
     let job = await JobModel.findOne({ _id: req.params.jobId })
 
-    // let job = await JobModel.updateOne({ _id: req.params.jobId }, {  })
-
     if (job) {
 
         // let arr = .push()
         job['applicants'] = [...job.applicants, req.body._id]
-
-        console.log(job)
 
         job.save().then(data => {
             res.send({ message: 'Successfully applied the job', error: false, data: data })

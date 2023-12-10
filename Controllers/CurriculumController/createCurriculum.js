@@ -4,7 +4,7 @@ const _ = require('lodash')
 const { IncomingForm } = require('formidable')
 
 
-const addCurriculum = async (req, res) => {
+const createCurriculum = async (req, res) => {
 
     let form = new IncomingForm()
     form.keepExtensions = true
@@ -86,5 +86,5 @@ const addCurriculum = async (req, res) => {
 }
 
 
-module.exports.addCurriculum = addCurriculum
+module.exports.createCurriculum = createCurriculum
 
