@@ -1,7 +1,7 @@
 const { MCQModel } = require("../../Models/McqModel")
 
 
-const addBroadQuestion = (req, res) => {
+const createBroadQuestion = (req, res) => {
 
     let mcq = new MCQModel(req.body)
 
@@ -14,4 +14,4 @@ const addBroadQuestion = (req, res) => {
 
 }
 
-module.exports.addBroadQuestion = addBroadQuestion
+module.exports.createBroadQuestion = createBroadQuestion

@@ -1,7 +1,7 @@
 const { MCQModel } = require("../../Models/McqModel")
 
 
-const addMcq = (req, res) => {
+const createMcq = (req, res) => {
 
     // let obj = _.pick(req.body, ['chapterId', 'subjectId', 'curriculumId', 'moduleId', 'question', 'options', 'answer', 'hints', 'explanation', 'difficulty', 'tags'])
 
@@ -16,4 +16,4 @@ const addMcq = (req, res) => {
 
 }
 
-module.exports.addMcq = addMcq
+module.exports.createMcq = createMcq
