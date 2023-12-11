@@ -4,7 +4,7 @@ const JobModel = model('Job', Schema({
 
     studentId: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
     applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher' }],
-    jobId: { type: Number, required: true }, // don't appear in frontend
+    jobNumber: { type: Number, required: true }, // don't appear in frontend
     subject: { type: String, required: true },
     salary: { type: Number, required: true },
     time: { type: String, required: true },
