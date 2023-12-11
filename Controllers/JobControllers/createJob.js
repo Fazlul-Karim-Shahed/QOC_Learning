@@ -11,7 +11,7 @@ const createJob = async (req, res) => {
         data["approved"] = true
     }
 
-    data["jobId"] = allJob.length
+    data["jobNumber"] = allJob.length
 
 
     data = new JobModel(req.body)
