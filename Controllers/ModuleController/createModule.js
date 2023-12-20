@@ -33,18 +33,18 @@ const createModule = async (req, res) => {
 
                 let arr = []
 
-                if (files.materials && files.materials.length > 0) {
+                if (files['materials[]'] && files['materials[]'].length > 0) {
 
-                    for (let i in files.materials) {
+                    for (let i in files['materials[]']) {
 
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files.materials[i].filepath, (err, data) => {
+                            fs.readFile(files['materials[]'][i].filepath, (err, data) => {
 
                                 resolve({
                                     data: data,
-                                    contentType: files.materials[i].mimetype,
-                                    name: files.materials[i].originalFilename,
+                                    contentType: files['materials[]'][i].mimetype,
+                                    name: files['materials[]'][i].originalFilename,
                                 })
 
                             })

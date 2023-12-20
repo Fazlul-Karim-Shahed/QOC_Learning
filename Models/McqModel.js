@@ -9,14 +9,12 @@ const MCQModel = model('MCQ', Schema({
     moduleId: { type: Schema.Types.ObjectId, ref: "Module" },
     
     question: { type: String, required: true },
-    options: [{ type: String, required: true }],
+    options: [{ option: String, value: String }],
     answer: { type: String, required: true },
     hints: { type: String },
     explanation: { type: String },
     difficulty: { type: String, required: true, default: 'easy', enum: ['easy', 'medium', 'hard'] },
-    tags: [{ type: String }],
-    
-    
+        
 }, { timestamps: true }))
 
 

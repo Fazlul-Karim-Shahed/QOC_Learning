@@ -1,10 +1,10 @@
 const { model, Schema } = require('mongoose')
 
-const JobModel = model('Job', Schema({
+const TuitionModel = model('Tuition', Schema({
 
     studentId: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
-    applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher' }],
-    jobNumber: { type: Number, required: true }, // don't appear in frontend
+    applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher', unique: true}],
+    tuitionNumber: { type: Number, required: true }, // don't appear in frontend
     subject: { type: String, required: true },
     salary: { type: Number, required: true },
     time: { type: String, required: true },
@@ -18,11 +18,11 @@ const JobModel = model('Job', Schema({
     
     approved: { type: Boolean, required: true, default: false }, // don't appear in frontend
     confirmed: { type: Boolean, required: true, default: false }, // don't appear in frontend
-    confirmedTeacherId: { type: Schema.Types.ObjectId }
+    confirmedTeacherId: { type: Schema.Types.ObjectId, ref: 'Teacher' }
 
 
 
 }, { timestamps: true }))
 
 
-module.exports.JobModel = JobModel
+module.exports.TuitionModel = TuitionModel

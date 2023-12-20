@@ -7,13 +7,14 @@ const compression = require('compression')
 const _ = require('lodash')
 const path = require('path')
 const AuthRouters = require('./Routers/AuthRouters')
-const JobRouters = require('./Routers/JobRouters')
+const TuitionRouters = require('./Routers/TuitionRouters')
 const TeacherRouters = require('./Routers/TeacherRouters')
 const StudentRouters = require('./Routers/StudentRouters')
 const SubjectRouters = require('./Routers/SubjectRouters')
 const CurriculumRouters = require('./Routers/CurriculumRouters')
 const ChapterRouters = require('./Routers/ChapterRouters')
 const ModuleRouters = require('./Routers/ModuleRouters')
+const McqRouters = require('./Routers/McqRouters')
 
 
 
@@ -59,13 +60,14 @@ app.use((err, req, res, next) => {
 })
 // ------------ All Routers ------------ //
 app.use('/api/auth', AuthRouters)
-app.use('/api/job', JobRouters)
+app.use('/api/tuition', TuitionRouters)
 app.use('/api/student', StudentRouters)
 app.use('/api/teacher', TeacherRouters)
 app.use('/api/subject', SubjectRouters)
 app.use('/api/curriculum', CurriculumRouters)
 app.use('/api/chapter', ChapterRouters)
 app.use('/api/module', ModuleRouters)
+app.use('/api/mcq', McqRouters)
 
 app.get('/api', (req, res) => {
     res.send({ message: 'Hey backend is here!!!', error: false })

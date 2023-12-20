@@ -1,12 +1,12 @@
 
-const { getTeacherAllTuition } = require('../Controllers/TeacherControllers/getTeacherAllTuition')
+
+const { getConfirmedTuition } = require('../Controllers/TeacherControllers/getConfirmedTuition')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 
 
 const router = require('express').Router()
 
-router.get('/all-tuition', roleCheck('teacher'), getTeacherAllTuition)
-router.put('/set-premium/:teacherId', roleCheck('admin'),)
+router.get('/confirmed-tuition/:teacherId', roleCheck('teacher'), getConfirmedTuition)
 
 module.exports = router

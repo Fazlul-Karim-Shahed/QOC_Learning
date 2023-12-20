@@ -33,7 +33,7 @@ const roleCheck = role => {
 
         }
         catch (err) {
-            res.send({ message: 'Something went wrong', error: true, data: err.message});
+            res.send({ message: 'Something went wrong', error: true, data: err.message });
         }
 
 
