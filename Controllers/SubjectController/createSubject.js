@@ -31,22 +31,25 @@ const createSubject = async (req, res) => {
 
             if (files && Object.keys(files).length !== 0) {
 
+                console.log('outlines', files['outlines[]'])
+                console.log('Materials', files['materials[]'])
+
                 let arr = []
 
-                if (files.outlines && files.outlines.length > 0) {
+                if (files['outlines[]'] && files['outlines[]'].length > 0) {
 
-                    for (let i in files.outlines) {
+                    for (let i in files['outlines[]']) {
 
                         // console.log(i)
 
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files.outlines[i].filepath, (err, data) => {
+                            fs.readFile(files['outlines[]'][i].filepath, (err, data) => {
 
                                 resolve({
-                                    // data: data,
-                                    contentType: files.outlines[i].mimetype,
-                                    name: files.outlines[i].originalFilename,
+                                    data: data,
+                                    contentType: files['outlines[]'][i].mimetype,
+                                    name: files['outlines[]'][i].originalFilename,
                                     type: 'outlines'
                                 })
 
@@ -57,23 +60,21 @@ const createSubject = async (req, res) => {
                     }
                 }
 
-                if (files.materials && files.materials.length > 0) {
+                if (files['materials[]'] && files['materials[]'].length > 0) {
 
 
-
-
-                    for (let i in files.materials) {
+                    for (let i in files['materials[]']) {
 
                         // console.log(i)
 
                         let p = new Promise(resolve => {
 
-                            fs.readFile(files.materials[i].filepath, (err, data) => {
+                            fs.readFile(files['materials[]'][i].filepath, (err, data) => {
 
                                 resolve({
-                                    // data: data,
-                                    contentType: files.materials[i].mimetype,
-                                    name: files.materials[i].originalFilename,
+                                    data: data,
+                                    contentType: files['materials[]'][i].mimetype,
+                                    name: files['materials[]'][i].originalFilename,
                                     type: 'materials'
                                 })
 
@@ -93,7 +94,7 @@ const createSubject = async (req, res) => {
                     subject['materials'] = materials.map(data => {
 
                         return {
-                            // data: data.data,
+                            data: data.data,
                             contentType: data.contentType,
                             name: data.name
                         }
@@ -102,7 +103,7 @@ const createSubject = async (req, res) => {
                     subject['outlines'] = outlines.map(data => {
 
                         return {
-                            // data: data.data,
+                            data: data.data,
                             contentType: data.contentType,
                             name: data.name
                         }
@@ -113,6 +114,8 @@ const createSubject = async (req, res) => {
                     subject.save().then(data => {
 
                         res.send({ message: 'Subject created successfully', error: false, value: data });
+                    }).catch(err => {
+                        res.send({ message: 'Subject upload failed', error: true, data: err.message })
                     })
 
 
@@ -127,6 +130,8 @@ const createSubject = async (req, res) => {
 
                     res.send({ message: 'Subject created successfully', error: false, value: data });
                     
+                }).catch(err => {
+                    res.send({ message: 'Subject upload failed', error: true , data: err.message})
                 })
 
             }

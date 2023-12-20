@@ -6,10 +6,16 @@ const { IncomingForm } = require('formidable')
 
 const createCurriculum = async (req, res) => {
 
+    // console.log(req)
+
     let form = new IncomingForm()
     form.keepExtensions = true
 
     form.parse(req, (err, fields, files) => {
+
+        // console.log("Fields: ", fields)
+        // console.log("Files: ", files)
+        // console.log("Files: ", files['outlines[]'])
 
         if (err) {
 
@@ -33,18 +39,18 @@ const createCurriculum = async (req, res) => {
 
                 let arr = []
 
-                if (files.outlines && files.outlines.length > 0) {
+                if (files['outlines[]'] && files['outlines[]'].length > 0) {
 
-                    for (let i in files.outlines) {
+                    for (let i in files['outlines[]']) {
 
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files.outlines[i].filepath, (err, data) => {
+                            fs.readFile(files['outlines[]'][i].filepath, (err, data) => {
 
                                 resolve({
-                                    // data: data,
-                                    contentType: files.outlines[i].mimetype,
-                                    name: files.outlines[i].originalFilename,
+                                    data: data,
+                                    contentType: files['outlines[]'][i].mimetype,
+                                    name: files['outlines[]'][i].originalFilename,
                                 })
 
                             })
@@ -60,7 +66,7 @@ const createCurriculum = async (req, res) => {
 
                     curriculum.save().then(data => {
 
-                        res.send({ message: 'curriculum created successfully', error: false, value: data });
+                        res.send({ message: 'curriculum created successfully', error: false, data: data });
                     })
 
 
@@ -71,7 +77,7 @@ const createCurriculum = async (req, res) => {
 
                 curriculum.save().then(data => {
 
-                    res.send({ message: 'curriculum created successfully', error: false, value: data });
+                    res.send({ message: 'curriculum created successfully', error: false, data: data });
 
                 })
 

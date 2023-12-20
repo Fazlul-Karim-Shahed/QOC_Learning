@@ -8,7 +8,6 @@ const BatchModel = model('Batch', Schema({
     startDate: { type: Date, required: true },
     fees: { type: Number, required: true },
 
-
     enrolledStudents: [{
         studentId: { type: Schema.Types.ObjectId, ref: "Student" },
         description: { type: String, default: 'I want admission in your batch', required: true },

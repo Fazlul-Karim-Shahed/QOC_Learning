@@ -9,6 +9,7 @@ const BroadQuestionModel = model('BroadQuestion', Schema({
     moduleId: { type: Schema.Types.ObjectId, ref: "Module" },
 
     question: { type: String, required: true },
+    answer: { type: String },
     hints: { type: String },
     difficulty: { type: String, required: true, default: 'easy', enum: ['easy', 'medium', 'hard'] },
     tags: [{ type: String }],
