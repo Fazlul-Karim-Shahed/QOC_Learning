@@ -15,6 +15,8 @@ const CurriculumRouters = require('./Routers/CurriculumRouters')
 const ChapterRouters = require('./Routers/ChapterRouters')
 const ModuleRouters = require('./Routers/ModuleRouters')
 const McqRouters = require('./Routers/McqRouters')
+const BroadQuestionRouters = require('./Routers/BroadQuestionRouters')
+const ExamRouters = require('./Routers/ExamRouters')
 
 
 
@@ -68,6 +70,8 @@ app.use('/api/curriculum', CurriculumRouters)
 app.use('/api/chapter', ChapterRouters)
 app.use('/api/module', ModuleRouters)
 app.use('/api/mcq', McqRouters)
+app.use('/api/broad-question', BroadQuestionRouters)
+app.use('/api/exam', ExamRouters)
 
 app.get('/api', (req, res) => {
     res.send({ message: 'Hey backend is here!!!', error: false })

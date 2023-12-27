@@ -4,20 +4,26 @@ const { model, Schema } = require('mongoose')
 
 const ExamModel = model('Exam', Schema({
 
+    exam: {type: String, required: true},
     chapterId: { type: Schema.Types.ObjectId, ref: "Chapter" },
     subjectId: { type: Schema.Types.ObjectId, ref: "Subject", required: true },
     curriculumId: { type: Schema.Types.ObjectId, ref: "Curriculum", required: true },
     moduleId: { type: Schema.Types.ObjectId, ref: "Module" },
 
-    mcq: [{ type: Schema.Types.ObjectId, ref: "MCQ" }],
-    descriptive: [{ type: Schema.Types.ObjectId, ref: "DescriptiveQuestion" }],
+    mcqsId: [{ type: Schema.Types.ObjectId, ref: "MCQ" }],
+    broadQuestionsId: [{ type: Schema.Types.ObjectId, ref: "BroadQuestion" }],
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
+    negativeMarking: { type: Number, required: true },
+    perMcqMarks: { type: Number, required: true},
+    totalMarks: { type: Number, required: true },
 
     participants: [{
-        studentId: { type: Schema.Types.ObjectId },
-        ref: "Student",
+        studentId: { type: Schema.Types.ObjectId, ref: "Student"},
         mcqMarks: { type: Number },
+        correctMcq: { type: Number },
+        wrongMcq: { type: Number },
+        noAnswer: { type: Number },
         broadQuestionMarks: { type: Number },
         script: { data: Buffer, contentType: String, type: Object },
         position: { type: Number },

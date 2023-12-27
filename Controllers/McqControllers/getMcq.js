@@ -4,7 +4,7 @@
 const { MCQModel } = require('../../Models/McqModel')
 const { cleanObject } = require('../cleanObject')
 
-const getMcqByCriteria = async (req, res) => {
+const getMcq = async (req, res) => {
 
     let mcq = await MCQModel.find(cleanObject(req.body)).populate(['curriculumId', 'subjectId', 'chapterId', 'moduleId'])
 
@@ -17,4 +17,4 @@ const getMcqByCriteria = async (req, res) => {
 
 }
 
-module.exports.getMcqByCriteria = getMcqByCriteria
+module.exports.getMcq = getMcq

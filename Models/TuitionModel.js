@@ -3,7 +3,7 @@ const { model, Schema } = require('mongoose')
 const TuitionModel = model('Tuition', Schema({
 
     studentId: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
-    applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher', unique: true}],
+    applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher', unique: true }],
     tuitionNumber: { type: Number, required: true }, // don't appear in frontend
     subject: { type: String, required: true },
     salary: { type: Number, required: true },
@@ -15,7 +15,7 @@ const TuitionModel = model('Tuition', Schema({
     location: { type: String, required: true },
     tuitionType: { type: String, required: true, default: 'Offline' },
     otherRequirements: { type: String },
-    
+
     approved: { type: Boolean, required: true, default: false }, // don't appear in frontend
     confirmed: { type: Boolean, required: true, default: false }, // don't appear in frontend
     confirmedTeacherId: { type: Schema.Types.ObjectId, ref: 'Teacher' }

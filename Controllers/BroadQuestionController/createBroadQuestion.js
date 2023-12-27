@@ -1,11 +1,12 @@
-const { MCQModel } = require("../../Models/McqModel")
+const { BroadQuestionModel } = require("../../Models/BroadQuestionModel");
+const { cleanObject } = require("../cleanObject");
 
 
 const createBroadQuestion = (req, res) => {
 
-    let mcq = new MCQModel(req.body)
+    let broadQuestion = new BroadQuestionModel(cleanObject(req.body))
 
-    mcq.save().then(data => {
+    broadQuestion.save().then(data => {
         res.send({ message: 'Broad question created successfully', error: false, value: data });
     }
     ).catch(err => {
