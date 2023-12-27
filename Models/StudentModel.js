@@ -19,7 +19,7 @@ const StudentModel = model('Student', Schema({
     },
 
     country: { type: String, default: 'Bangladesh', required: true },
-    // curriculum: { type: String, enum: ['nctb', 'ielts', 'icse', 'cbse', 'camb_a', 'camb_o', 'ed_excel', 'camb_igcse'] },
+    curriculumId: { type: Schema.Types.ObjectId, ref: 'Curriculum' },
     
 
 }, { timestamps: true }))

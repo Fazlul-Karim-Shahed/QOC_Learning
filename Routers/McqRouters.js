@@ -1,15 +1,14 @@
 
 
 const { createMcq } = require('../Controllers/McqControllers/createMcq')
-const { getAllMcq } = require('../Controllers/McqControllers/getAllMcq')
-const { getMcqByCriteria } = require('../Controllers/McqControllers/getMcqByCriteria')
+
+const { getMcq } = require('../Controllers/McqControllers/getMcq')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 const router = require('express').Router()
 
 router.post('/', roleCheck('teacher'), createMcq)
-router.get('/', getAllMcq)
-router.post('/get-by-criteria', roleCheck('teacher'), getMcqByCriteria)
+router.post('/get', roleCheck('teacher'), getMcq)
 
 
 module.exports = router
