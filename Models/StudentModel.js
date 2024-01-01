@@ -20,7 +20,10 @@ const StudentModel = model('Student', Schema({
 
     country: { type: String, default: 'Bangladesh', required: true },
     curriculumId: { type: Schema.Types.ObjectId, ref: 'Curriculum' },
-    
+    assignment: {
+        isPremium: { type: Boolean, required: true, default: false },
+        time: { type: Date, default: new Date().toLocaleString(), required: true }
+    },
 
 }, { timestamps: true }))
 
