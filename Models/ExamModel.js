@@ -25,7 +25,7 @@ const ExamModel = model('Exam', Schema({
         wrongMcq: { type: Number },
         noAnswer: { type: Number },
         broadQuestionMarks: { type: Number },
-        script: { data: Buffer, contentType: String, type: Object },
+        script: { data: Buffer, contentType: String, type: Object, name: String },
         position: { type: Number },
 
     }],

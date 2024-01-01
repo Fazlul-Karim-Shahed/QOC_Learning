@@ -58,7 +58,7 @@ const createExam = async (req, res) => {
 
             for (let i = 0; i < req.body.numberOfBroadQuestion; i++) {
 
-                let broadQuestionId = await generateRandValue(broadQuestion, broadQuestionsId)
+                let broadQuestionId = generateRandValue(broadQuestion, broadQuestionsId)
                 broadQuestionsId.push(broadQuestionId)
             }
 

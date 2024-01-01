@@ -33,26 +33,26 @@ app.use(compression())
 
 
 // Local DB
-// mongoose.connect(process.env.MONGODB_LOCAL + '/QOC_Learning')
-//     .then(data => console.log('Successfully connected to MongoDB Server'))
-//     .catch(data => {
-//         console.log(data);
-//         console.log('Something went wrong with MongoDB Server')
-//     })
+mongoose.connect(process.env.MONGODB_LOCAL + '/QOC_Learning')
+    .then(data => console.log('Successfully connected to MongoDB Server'))
+    .catch(data => {
+        console.log(data);
+        console.log('Something went wrong with MongoDB Server')
+    })
 
 
 // ------------ Database ------------  //
-const DB = process.env.MONGODB_DATABASE.replace('<password>', process.env.MONGODB_PASS)
-mongoose.set('strictQuery', false)
-mongoose.connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(data => console.log('Successfully connected to MongoDB Server'))
-    .catch(data => {
-        console.log('Something went wrong with MongoDB Server')
-        console.log(data)
-    })
+// const DB = process.env.MONGODB_DATABASE.replace('<password>', process.env.MONGODB_PASS)
+// mongoose.set('strictQuery', false)
+// mongoose.connect(DB, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// })
+//     .then(data => console.log('Successfully connected to MongoDB Server'))
+//     .catch(data => {
+//         console.log('Something went wrong with MongoDB Server')
+//         console.log(data)
+//     })
 
 
 app.use((err, req, res, next) => {
