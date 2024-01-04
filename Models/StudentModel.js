@@ -10,7 +10,7 @@ const StudentModel = model('Student', Schema({
         max: 1024,
         min: 6,
         required: true,
-        
+
     },
     role: {
         type: String,
@@ -22,7 +22,10 @@ const StudentModel = model('Student', Schema({
     curriculumId: { type: Schema.Types.ObjectId, ref: 'Curriculum' },
     assignment: {
         isPremium: { type: Boolean, required: true, default: false },
-        time: { type: Date, default: new Date().toLocaleString(), required: true }
+        startTime: { type: Date, default: new Date().toLocaleString(), required: true },
+        endTime: { type: Date, default: new Date().toLocaleString(), required: true },
+
+        // endTime: { type: Date, default: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(), required: true },
     },
 
 }, { timestamps: true }))
