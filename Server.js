@@ -16,6 +16,7 @@ const ChapterRouters = require('./Routers/ChapterRouters')
 const ModuleRouters = require('./Routers/ModuleRouters')
 const McqRouters = require('./Routers/McqRouters')
 const BroadQuestionRouters = require('./Routers/BroadQuestionRouters')
+const AssignmentRouters = require('./Routers/AssignmentRouters')
 const ExamRouters = require('./Routers/ExamRouters')
 
 
@@ -33,26 +34,26 @@ app.use(compression())
 
 
 // Local DB
-// mongoose.connect(process.env.MONGODB_LOCAL + '/QOC_Learning')
-//     .then(data => console.log('Successfully connected to MongoDB Server'))
-//     .catch(data => {
-//         console.log(data);
-//         console.log('Something went wrong with MongoDB Server')
-//     })
+mongoose.connect(process.env.MONGODB_LOCAL + '/QOC_Learning')
+    .then(data => console.log('Successfully connected to MongoDB Server'))
+    .catch(data => {
+        console.log(data);
+        console.log('Something went wrong with MongoDB Server')
+    })
 
 
 // ------------ Database ------------  //
-const DB = process.env.MONGODB_DATABASE.replace('<password>', process.env.MONGODB_PASS)
-mongoose.set('strictQuery', false)
-mongoose.connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(data => console.log('Successfully connected to MongoDB Server'))
-    .catch(data => {
-        console.log('Something went wrong with MongoDB Server')
-        console.log(data)
-    })
+// const DB = process.env.MONGODB_DATABASE.replace('<password>', process.env.MONGODB_PASS)
+// mongoose.set('strictQuery', false)
+// mongoose.connect(DB, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// })
+//     .then(data => console.log('Successfully connected to MongoDB Server'))
+//     .catch(data => {
+//         console.log('Something went wrong with MongoDB Server')
+//         console.log(data)
+//     })
 
 
 app.use((err, req, res, next) => {
@@ -72,6 +73,7 @@ app.use('/api/module', ModuleRouters)
 app.use('/api/mcq', McqRouters)
 app.use('/api/broad-question', BroadQuestionRouters)
 app.use('/api/exam', ExamRouters)
+app.use('/api/assignment', AssignmentRouters)
 
 app.get('/api', (req, res) => {
     res.send({ message: 'Hey backend is here!!!', error: false })
