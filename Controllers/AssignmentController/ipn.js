@@ -8,7 +8,7 @@ const ipn = async (req, res) => {
 
     if (data.status === 'VALID') {
 
-        let student = await StudentModel({ _id: data.value_a })
+        let student = await StudentModel.findOne({ _id: data.value_a })
         console
 
         student['assignment'] = {
