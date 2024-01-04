@@ -15,7 +15,7 @@ router.post('/', roleCheck('student'), premiumCheck('assignment'), createAssignm
 router.post('/get', getAllAssignment)
 router.post('/payment', createAssignmentPayment)
 router.post('/payment/ipn', ipn)
-router.get('/check-premium', roleCheck('student'), premiumCheck('premium'), checkAssignmentPremium)
+router.get('/check-premium', roleCheck('student'), premiumCheck('assignment'), checkAssignmentPremium)
 
 
 module.exports = router

@@ -15,19 +15,20 @@ const premiumCheck = field => {
         try {
 
             // let data = await StudentModel({ _id: req.body.studentId })
+            // console.log(req.user[field])
+            // console.log(!req.user.assignment)
+            if (req.user[field]) {
 
-            if (req.user.hasOwnProperty(field)) {
-
-                if (new Date() > new Date(req.user.field.startTime) && new Date() < new Date(req.user.field.endTime)) {
+                if (new Date() > new Date(req.user[field].startTime) && new Date() < new Date(req.user[field].endTime)) {
                     next()
                 }
                 else {
-                    res.send({ message: 'Assignment premium service not activated', error: true })
+                    res.send({ message: 'Assignment premium service not activated 1', error: true, data: req.user })
                 }
 
             }
             else {
-                res.send({ message: 'Assignment premium service not activated', error: true })
+                res.send({ message: 'Assignment premium service not activated 2', error: true, data: req.user })
             }
 
 
