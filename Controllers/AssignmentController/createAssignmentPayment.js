@@ -11,7 +11,7 @@ const { StudentModel } = require('../../Models/StudentModel')
 
 const createAssignmentPayment = async (req, res) => {
 
-    let data = await StudentModel({ _id: req.body.studentId })
+    let data = await StudentModel.findOne({ _id: req.body.studentId })
 
     const payData = {
 
