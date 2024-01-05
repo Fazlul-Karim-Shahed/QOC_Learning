@@ -7,12 +7,14 @@ const { premiumCheck } = require('../Middlewares/premiumCheck') // dependent to 
 const { createAssignmentPayment } = require('../Controllers/AssignmentController/createAssignmentPayment')
 const { ipn } = require('../Controllers/AssignmentController/ipn')
 const { checkAssignmentPremium } = require('../Controllers/AssignmentController/checkAssignmentPremium')
+const { submitSolution } = require('../Controllers/AssignmentController/submitSolution')
 
 
 const router = require('express').Router()
 
 router.post('/', roleCheck('student'), premiumCheck('assignment'), createAssignment)
 router.post('/get', getAllAssignment)
+router.put('/:assignmentId', roleCheck('admin'), submitSolution)
 router.post('/payment', createAssignmentPayment)
 router.post('/payment/ipn', ipn)
 router.get('/check-premium', roleCheck('student'), premiumCheck('assignment'), checkAssignmentPremium)

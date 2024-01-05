@@ -23,12 +23,12 @@ const premiumCheck = field => {
                     next()
                 }
                 else {
-                    res.send({ message: 'Assignment premium service not activated 1', error: true, data: req.user })
+                    res.send({ message: 'Assignment premium service not activated', error: true, data: req.user })
                 }
 
             }
             else {
-                res.send({ message: 'Assignment premium service not activated 2', error: true, data: req.user })
+                res.send({ message: 'Assignment premium service not activated', error: true, data: req.user })
             }
 
 
