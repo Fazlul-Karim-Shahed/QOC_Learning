@@ -3,14 +3,12 @@ const { TeacherModel } = require("../../Models/TeacherModel")
 
 const setPremium = async (req, res) => {
 
-    console.log(req.params)
-
     let teacher = await TeacherModel.findOne({ _id: req.params.teacherId })
 
     if (teacher) {
 
-        teacher['isPremium'] = req.body.isPremium
-        teacher['premiumEnd'] = req.body.premiumEnd
+        teacher['isPremium'] = true
+        teacher['premiumEnd'] = new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString()
 
         teacher.save().then(data => {
             res.send({ message: 'Teacher is assigned as Premium', error: false, data: data })
