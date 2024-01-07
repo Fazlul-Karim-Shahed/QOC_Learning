@@ -32,8 +32,13 @@ const TeacherModel = model('Teacher', Schema({
     bio: { type: String },
     description: { type: String },
     image: { data: Buffer, contentType: String, type: Object },
-    isPremium: { type: Boolean, default: false, required: true },
-    premiumEnd: { type: Date },
+    batch: {
+        isPremium: { type: Boolean, required: true, default: false },
+        startTime: { type: Date, default: new Date().toLocaleString(), required: true },
+        endTime: { type: Date, default: new Date().toLocaleString(), required: true },
+
+        // endTime: { type: Date, default: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(), required: true },
+    },
 
     
 

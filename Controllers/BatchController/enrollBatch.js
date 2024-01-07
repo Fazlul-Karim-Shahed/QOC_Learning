@@ -1,6 +1,6 @@
 
 
-const { BatchModel } = require("../../Models/batchModel")
+const { BatchModel } = require("../../Models/BatchModel")
 
 
 const enrollBatch = async (req, res) => {

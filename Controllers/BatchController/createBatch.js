@@ -2,7 +2,7 @@ const { BatchModel } = require("../../Models/BatchModel")
 
 const createBatch = async (req, res) => {
 
-    if (req.user.isPremium) {
+    if (req.user.batch && req.user.batch.isPremium) {
 
         let batch = new BatchModel(req.body)
         
