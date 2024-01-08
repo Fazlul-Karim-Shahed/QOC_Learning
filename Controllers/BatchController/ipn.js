@@ -30,6 +30,7 @@ const ipn = async (req, res) => {
     else {
 
         res.send({ message: 'Transaction status: ' + data.status, error: true })
+        
     }
 
 
