@@ -24,6 +24,7 @@ const TeacherModel = model('Teacher', Schema({
     checkQocExam: { type: Number, default: 0, required: true },
     contactAgree: { type: Boolean, default: false, required: true },
     institution: { type: String },
+    gender: { type: String },
     address: { type: String },
     city: { type: String },
     state: { type: String },

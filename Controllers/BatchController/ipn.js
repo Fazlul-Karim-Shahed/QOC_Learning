@@ -18,10 +18,10 @@ const ipn = async (req, res) => {
         }
 
         teacher.save().then(data => {
-
+            console.log(data)
             res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
         }).catch(err => {
-
+            console.log(err)
             res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
         })
 
