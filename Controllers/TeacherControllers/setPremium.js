@@ -7,8 +7,11 @@ const setPremium = async (req, res) => {
 
     if (teacher) {
 
-        teacher['isPremium'] = true
-        teacher['premiumEnd'] = new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString()
+        teacher['batch'] = {
+            isPremium: true,
+            startTime: new Date().toLocaleString(),
+            endTime: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(),
+        }
 
         teacher.save().then(data => {
             res.send({ message: 'Teacher is assigned as Premium', error: false, data: data })
