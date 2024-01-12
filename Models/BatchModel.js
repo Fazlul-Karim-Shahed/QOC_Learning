@@ -10,10 +10,11 @@ const BatchModel = model('Batch', Schema({
 
     enrolledStudents: [{
         studentId: { type: Schema.Types.ObjectId, ref: "Student" },
-        description: { type: String, default: 'I want admission in your batch', required: true },
+        // description: { type: String, default: 'I want admission in your batch', required: true },
         createdAt: { type: Date, required: true, default: Date.now() },
+        transaction: { type: String },
     }],
-    classLink: {type: String, required: true, default: '' }
+    classLink: { type: String, required: true, default: '' }
     // isActive: { type: Boolean, default: true, required: true },
 
 }, { timestamps: true }))
