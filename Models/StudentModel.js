@@ -24,6 +24,7 @@ const StudentModel = model('Student', Schema({
         isPremium: { type: Boolean, required: true, default: false },
         startTime: { type: Date, default: new Date().toLocaleString(), required: true },
         endTime: { type: Date, default: new Date().toLocaleString(), required: true },
+        transaction: { type: String },
 
         // endTime: { type: Date, default: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(), required: true },
     },

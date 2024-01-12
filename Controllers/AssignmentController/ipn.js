@@ -15,6 +15,7 @@ const ipn = async (req, res) => {
             isPremium: true,
             startTime: new Date().toLocaleString(),
             endTime: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(),
+            transaction: data.tran_id
         }
 
         student.save().then(data => {

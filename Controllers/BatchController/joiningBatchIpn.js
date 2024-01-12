@@ -1,23 +1,23 @@
 
-const { TeacherModel } = require("../../Models/TeacherModel")
+
+const { BatchModel } = require("../../Models/BatchModel")
 
 
-const ipn = async (req, res) => {
+const joiningBatchIpn = async (req, res) => {
 
     let data = req.body
 
-
     if (data.status === 'VALID') {
 
-        let teacher = await TeacherModel.findOne({ _id: data.value_a })
+        let batch = await BatchModel.findOne({ _id: data.value_a })
 
-        teacher['batch'] = {
-            isPremium: true,
-            startTime: new Date().toLocaleString(),
-            endTime: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(),
-        }
+        batch['enrolledStudents'] = [...batch.enrolledStudents, {
+            studentId: data.value_b,
+            createdAt: new Date().toLocaleString(),
+            transaction: data.tran_id,
+        }]
 
-        teacher.save().then(data => {
+        batch.save().then(data => {
             console.log(data)
             res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
         }).catch(err => {
@@ -30,11 +30,11 @@ const ipn = async (req, res) => {
     else {
 
         res.send({ message: 'Transaction status: ' + data.status, error: true })
-        
+
     }
 
 
 }
 
 
-module.exports.ipn = ipn
+module.exports.joiningBatchIpn = joiningBatchIpn
