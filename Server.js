@@ -58,7 +58,6 @@ mongoose
   });
 
 
-
 // ------------ All Routers ------------ //
 app.use("/api/auth", AuthRouters);
 app.use("/api/tuition", TuitionRouters);
@@ -82,9 +81,9 @@ app.get("/", (req, res) => {
 
 // Express async error handlers
 app.use((err, req, res, next) => {
-  // console.log(err)
-  if (err) return res.send({ message: err, error: true });
+    if (err) return res.send({ message: err.message, error: true })
 });
+
 
 // ------------ Server ------------ //
 
