@@ -57,11 +57,9 @@ mongoose.connect(DB, {
     })
 
 
-app.use((err, req, res, next) => {
 
-    res.status(500).send({ message: 'Something went wrong', error: true, data: _.pick(err, ['messageFormat', 'kind', 'value', 'path', 'valueType', 'message']) })
 
-})
+
 // ------------ All Routers ------------ //
 app.use('/api/auth', AuthRouters)
 app.use('/api/tuition', TuitionRouters)
@@ -76,10 +74,16 @@ app.use('/api/broad-question', BroadQuestionRouters)
 app.use('/api/exam', ExamRouters)
 app.use('/api/assignment', AssignmentRouters)
 app.use('/api/batch', BatchRouters)
-
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
     res.send({ message: 'Hey backend is here!!!', error: false })
 })
+
+
+
+// Express async error handlers
+app.use((err, req, res, next) => {
+    if (err) return res.send({ message: err.message, error: true })
+});
 
 
 // ------------ Server ------------ //

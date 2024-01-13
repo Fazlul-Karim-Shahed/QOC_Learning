@@ -14,6 +14,12 @@ const BatchModel = model('Batch', Schema({
         createdAt: { type: Date, required: true, default: Date.now() },
         transaction: { type: String },
     }],
+    announcements: [{
+        title: { type: String, required: true, default: 'New Announcement' },
+        description: { type: String },
+        materials: [{ data: Buffer, contentType: String, type: Object, name: String }],
+        createdAt: { type: Date, required: true, default: Date.now() },
+    }],
     classLink: { type: String, required: true, default: '' }
     // isActive: { type: Boolean, default: true, required: true },
 

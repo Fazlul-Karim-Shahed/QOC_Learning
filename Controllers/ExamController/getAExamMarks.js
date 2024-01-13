@@ -1,7 +1,4 @@
 
-
-
-
 const { default: mongoose } = require('mongoose');
 const { ExamModel } = require('../../Models/ExamModel');
 
