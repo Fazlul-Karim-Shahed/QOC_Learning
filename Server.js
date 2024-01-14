@@ -1,4 +1,4 @@
-// require('express-async-errors')
+require('express-async-errors')
 const express = require('express')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
@@ -81,10 +81,10 @@ app.get('/', (req, res) => {
 
 
 // Express async error handlers
-// app.use((err, req, res, next) => {
-//     console.log(err)
-//     if (err) return res.send({ message: err, error: true })
-// });
+app.use((err, req, res, next) => {
+    console.log(err)
+    if (err) return res.send({ message: err, error: true })
+});
 
 
 // ------------ Server ------------ //
