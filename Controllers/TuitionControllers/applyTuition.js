@@ -1,27 +1,20 @@
 
+const { Schema, default: mongoose } = require("mongoose")
 const { TuitionModel } = require("../../Models/TuitionModel")
 
 
 const applyTuition = async (req, res) => {
 
-    let tuition = await TuitionModel.findOne({ _id: req.params.tuitionId })
+    // console.log(tuition)
 
-    if (tuition) {
+    TuitionModel.updateOne({ _id: req.params.tuitionId }, { $push: { applicants: new mongoose.Types.ObjectId(req.body._id) } }).then(data => {
+        res.send({ message: 'Successfully applied the tuition', error: false, data: data })
+    })
+        .catch(err => {
+            console.log(err)
+            res.send({ message: 'Application failed', error: true, data: err.message })
 
-        // let arr = .push()
-        tuition['applicants'] = [...tuition.applicants, req.body._id]
-
-        tuition.save().then(data => {
-            res.send({ message: 'Successfully applied the tuition', error: false, data: data })
         })
-            .catch(err => {
-                res.send({ message: 'Application failed', error: true, data: err.message })
-
-            })
-    }
-    else {
-        res.status(404).send({ message: 'Tuition not found', error: true })
-    }
 
 }
 
