@@ -10,6 +10,8 @@ const joiningBatchIpn = async (req, res) => {
 
     if (data.status === 'VALID') {
 
+        console.log(data.status)
+
         BatchModel.updateOne({ _id: data.value_a }, {
             $push: {
                 enrolledStudents: {
