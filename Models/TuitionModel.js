@@ -2,9 +2,9 @@ const { model, Schema } = require('mongoose')
 
 const TuitionModel = model('Tuition', Schema({
 
-    curriculumId: { type: Schema.Types.ObjectId, ref: 'Curriculum', required: true },
+    // curriculumId: { type: Schema.Types.ObjectId, ref: 'Curriculum', required: true },
     studentId: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
-    applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher', unique: true }],
+    applicants: [{ type: Schema.Types.ObjectId, ref: 'Teacher'}],
     tuitionNumber: { type: Number, required: true }, // don't appear in frontend
     subject: { type: String, required: true },
     salary: { type: Number, required: true },
