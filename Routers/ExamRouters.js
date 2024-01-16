@@ -14,7 +14,7 @@ const { roleCheck } = require('../Middlewares/roleCheck')
 const router = require('express').Router()
 
 router.post('/', roleCheck('admin'), createExam)
-router.get('/', roleCheck('admin'), getAllExam)
+router.post('/get', getAllExam)
 router.get('/:examId', roleCheck('admin'), getAExam)
 router.get('/student/:studentId', roleCheck('student'), getExamById)
 router.put('/submit/:examId', roleCheck('student'), submitExam)

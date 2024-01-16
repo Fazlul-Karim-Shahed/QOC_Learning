@@ -17,6 +17,7 @@ const ExamModel = model('Exam', Schema({
     negativeMarking: { type: Number, required: true },
     perMcqMarks: { type: Number, required: true},
     totalMarks: { type: Number, required: true },
+    solution: { data: Buffer, contentType: String, type: Object, name: String },
 
     participants: [{
         studentId: { type: Schema.Types.ObjectId, ref: "Student"},
@@ -27,7 +28,6 @@ const ExamModel = model('Exam', Schema({
         broadQuestionMarks: { type: Number },
         script: { data: Buffer, contentType: String, type: Object, name: String },
         position: { type: Number },
-
     }],
 
 
