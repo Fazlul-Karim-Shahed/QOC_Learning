@@ -9,6 +9,7 @@ const { getAllExam } = require('../Controllers/ExamController/getAllExam')
 const { getExamById } = require('../Controllers/ExamController/getExamById')
 const { submitExam } = require('../Controllers/ExamController/submitExam')
 const { updateMarks } = require('../Controllers/ExamController/updateMarks')
+const { uploadSolution } = require('../Controllers/ExamController/uploadSolution')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 const router = require('express').Router()
@@ -20,6 +21,7 @@ router.get('/student/:studentId', roleCheck('student'), getExamById)
 router.put('/submit/:examId', roleCheck('student'), submitExam)
 router.get('/:examId/:studentId', roleCheck('student'), getAExamMarks)
 router.put('/:examId/:studentId', roleCheck('admin'), updateMarks)
+router.post('/solution/:examId', roleCheck("admin"), uploadSolution);
 
 
 module.exports = router
