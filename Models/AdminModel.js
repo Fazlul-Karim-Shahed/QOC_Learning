@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose')
 
-const AdminModel = model('Admin', Schema({
+const AdminModel = model('Admin', new Schema({
 
     username: { type: String, required: true },
     email: { type: String, required: true },

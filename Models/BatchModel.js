@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose')
 
-const BatchModel = model('Batch', Schema({
+const BatchModel = model('Batch', new Schema({
 
     teacherId: { type: Schema.Types.ObjectId, ref: "Teacher", required: true },
     title: { type: String, required: true },

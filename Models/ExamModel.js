@@ -2,9 +2,9 @@
 
 const { model, Schema } = require('mongoose')
 
-const ExamModel = model('Exam', Schema({
+const ExamModel = model('Exam', new Schema({
 
-    exam: {type: String, required: true},
+    exam: { type: String, required: true },
     chapterId: { type: Schema.Types.ObjectId, ref: "Chapter" },
     subjectId: { type: Schema.Types.ObjectId, ref: "Subject", required: true },
     curriculumId: { type: Schema.Types.ObjectId, ref: "Curriculum", required: true },
@@ -15,12 +15,12 @@ const ExamModel = model('Exam', Schema({
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
     negativeMarking: { type: Number, required: true },
-    perMcqMarks: { type: Number, required: true},
+    perMcqMarks: { type: Number, required: true },
     totalMarks: { type: Number, required: true },
     solution: { data: Buffer, contentType: String, type: Object, name: String },
 
     participants: [{
-        studentId: { type: Schema.Types.ObjectId, ref: "Student"},
+        studentId: { type: Schema.Types.ObjectId, ref: "Student" },
         mcqMarks: { type: Number },
         correctMcq: { type: Number },
         wrongMcq: { type: Number },
