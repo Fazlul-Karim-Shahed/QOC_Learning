@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose')
 
-const TuitionModel = model('Tuition', Schema({
+const TuitionModel = model('Tuition', new Schema({
 
     // curriculumId: { type: Schema.Types.ObjectId, ref: 'Curriculum', required: true },
     studentId: { type: Schema.Types.ObjectId, ref: 'Student', required: true },

@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose')
 
-const ChapterModel = model('Chapter', Schema({
+const ChapterModel = model('Chapter', new Schema({
 
     chapter: { type: String, required: true },
     curriculumId: { type: Schema.Types.ObjectId, ref: "Curriculum", required: true },

@@ -1,4 +1,5 @@
 
+const router = require('express').Router()
 
 const { createAssignment } = require('../Controllers/AssignmentController/createAssignment')
 const { getAllAssignment } = require('../Controllers/AssignmentController/getAllAssignment')
@@ -10,7 +11,7 @@ const { checkAssignmentPremium } = require('../Controllers/AssignmentController/
 const { submitSolution } = require('../Controllers/AssignmentController/submitSolution')
 
 
-const router = require('express').Router()
+
 
 router.post('/', roleCheck('student'), premiumCheck('assignment'), createAssignment)
 router.post('/get', getAllAssignment)

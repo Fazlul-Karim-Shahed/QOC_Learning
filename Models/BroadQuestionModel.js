@@ -1,7 +1,7 @@
 
 const { model, Schema } = require('mongoose')
 
-const BroadQuestionModel = model('BroadQuestion', Schema({
+const BroadQuestionModel = model('BroadQuestion', new Schema({
 
     chapterId: { type: Schema.Types.ObjectId, ref: "Chapter", required: true },
     subjectId: { type: Schema.Types.ObjectId, ref: "Subject", required: true },
