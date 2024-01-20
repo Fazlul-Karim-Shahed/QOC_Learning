@@ -6,10 +6,12 @@ const { IncomingForm } = require('formidable')
 const { cleanObject } = require('../cleanObject')
 
 
-const createFocus = async (req, res) => {
+const updateFocus = async (req, res) => {
 
     let form = new IncomingForm()
     form.keepExtensions = true
+
+    let updatedFocus = await FocusModel.findOne({ _id: req.params.focusId })
 
     form.parse(req, (err, fields, files) => {
 
@@ -28,9 +30,9 @@ const createFocus = async (req, res) => {
 
             }
 
-            let focus = new FocusModel(cleanObject(focusObj))
+            Object.assign(updatedFocus, cleanObject(focusObj));
 
-            if (files && Object.keys(files).length !== 0) {
+            if (files && Object.keys(files).length != 0) {
 
                 if (files['attachment'] && files['attachment'].length > 0) {
 
@@ -51,14 +53,14 @@ const createFocus = async (req, res) => {
                     x.then(data => {
 
 
-                        focus['attachment'] = data
+                        updatedFocus['attachment'] = data
 
-                        focus.save().then(data => {
+                        updatedFocus.save().then(data => {
 
-                            res.send({ message: 'focus created successfully', error: false, value: data });
+                            res.send({ message: 'focus updated successfully', error: false, value: data });
                         }).catch(err => {
 
-                            res.send({ message: 'focus creation failed', error: true, value: err.message });
+                            res.send({ message: 'focus update failed', error: true, value: err.message });
                         })
 
                     })
@@ -67,14 +69,15 @@ const createFocus = async (req, res) => {
             }
             else {
 
-                focus.save().then(data => {
+                updatedFocus.save().then(data => {
 
-                    res.send({ message: 'focus created successfully', error: false, value: data });
-
+                    res.send({ message: 'focus updated successfully', error: false, value: data });
                 }).catch(err => {
 
-                    res.send({ message: 'focus creation failed', error: true, value: err.message });
+                    res.send({ message: 'focus update failed', error: true, value: err.message });
                 })
+
+
 
             }
 
@@ -87,5 +90,5 @@ const createFocus = async (req, res) => {
 }
 
 
-module.exports.createFocus = createFocus
+module.exports.updateFocus = updateFocus
 

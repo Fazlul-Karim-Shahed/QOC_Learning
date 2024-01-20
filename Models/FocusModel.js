@@ -1,6 +1,4 @@
 
-
-
 const { model, Schema } = require('mongoose')
 
 const FocusModel = model('Focus', new Schema({
