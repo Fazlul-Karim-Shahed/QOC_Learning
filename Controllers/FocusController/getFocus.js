@@ -11,7 +11,7 @@ const getFocus = async (req, res) => {
         res.status(200).send({ message: 'All focus', error: false, data: focus })
     }
     else {
-        res.send({ message: 'No focus found found', error: true })
+        res.send({ message: 'No focus found', error: true })
     }
 
 }

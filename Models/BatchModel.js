@@ -20,8 +20,8 @@ const BatchModel = model('Batch', new Schema({
         materials: [{ data: Buffer, contentType: String, type: Object, name: String }],
         createdAt: { type: Date, required: true, default: Date.now() },
     }],
-    classLink: { type: String, required: true, default: '' }
-    // isActive: { type: Boolean, default: true, required: true },
+    classLink: { type: String, required: true, default: '' },
+    pastPaperSolution: { type: Boolean, default: false, required: true },
 
 }, { timestamps: true }))
 
