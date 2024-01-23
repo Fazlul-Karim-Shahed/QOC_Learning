@@ -39,6 +39,7 @@ app.use(compression());
 //         console.log('Something went wrong with MongoDB Server')
 //     })
 
+
 // ------------ Database ------------  //
 const DB = process.env.MONGODB_DATABASE.replace(
   "<password>",
@@ -72,6 +73,7 @@ app.use("/api/assignment", AssignmentRouters);
 app.use("/api/batch", BatchRouters);
 app.use("/api/focus", FocusRouters);
 app.use("/api/resource", ResourceRouters);
+
 app.get("/", (req, res) => {
   res.send({ message: "Hey backend is here!!!", error: false });
 });
