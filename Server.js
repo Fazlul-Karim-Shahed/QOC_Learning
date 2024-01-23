@@ -20,6 +20,7 @@ const AssignmentRouters = require("./Routers/AssignmentRouters");
 const ExamRouters = require("./Routers/ExamRouters");
 const BatchRouters = require("./Routers/BatchRouters");
 const FocusRouters = require("./Routers/FocusRouters");
+const ResourceRouters = require("./Routers/ResourceRouters");
 
 // ------------ Configuration ------------  //
 
@@ -70,6 +71,7 @@ app.use("/api/exam", ExamRouters);
 app.use("/api/assignment", AssignmentRouters);
 app.use("/api/batch", BatchRouters);
 app.use("/api/focus", FocusRouters);
+app.use("/api/resource", ResourceRouters);
 app.get("/", (req, res) => {
   res.send({ message: "Hey backend is here!!!", error: false });
 });
