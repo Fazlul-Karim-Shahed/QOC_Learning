@@ -8,7 +8,7 @@ const deleteFocus = async (req, res) => {
 
     if (focus) {
 
-        res.status(200).send({ message: 'Deleted', error: false, data: focus })
+        res.status(200).send({ message: 'Focus Deleted', error: false, data: focus })
     }
     else {
         res.send({ message: 'Not delete', error: true })

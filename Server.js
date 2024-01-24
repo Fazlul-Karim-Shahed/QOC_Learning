@@ -58,7 +58,7 @@ mongoose
   });
 
 
-  
+
 // ------------ All Routers ------------ //
 app.use("/api/auth", AuthRouters);
 app.use("/api/tuition", TuitionRouters);
