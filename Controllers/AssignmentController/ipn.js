@@ -1,13 +1,29 @@
+
 const { StudentModel } = require("../../Models/StudentModel")
+const { TransactionModel } = require("../../Models/TransactionModel")
 
 
 const ipn = async (req, res) => {
 
     let data = req.body
 
-    if (data.status === 'VALID') {
+    let student = await StudentModel.findOne({ _id: data.value_a })
 
-        let student = await StudentModel.findOne({ _id: data.value_a })
+    await TransactionModel.create({
+        userInfo: {
+            userId: student._id,
+            username: student.username,
+            mobile: student.mobile,
+            email: student.email,
+            role: student.role,
+        },
+        status: data.status,
+        transId: data.tran_id,
+        tranDate: data.tran_date,
+        amount: data.currency_amount,
+    })
+
+    if (data.status === 'VALID') {
 
         student['assignment'] = {
             isPremium: true,
@@ -25,7 +41,7 @@ const ipn = async (req, res) => {
 
     }
     else {
-        console.log({ message: 'Transaction status: ' + data.status})
+        
         res.send({ message: 'Transaction status: ' + data.status, error: true })
     }
 
