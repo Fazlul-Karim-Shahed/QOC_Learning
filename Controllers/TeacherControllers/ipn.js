@@ -1,15 +1,32 @@
 
 const { TeacherModel } = require("../../Models/TeacherModel")
+const { TransactionModel } = require("../../Models/TransactionModel")
 
 
 const ipn = async (req, res) => {
 
     let data = req.body
 
+    let teacher = await TeacherModel.findOne({ _id: data.value_a })
+
+    await TransactionModel.create({
+        userInfo: {
+            userId: teacher._id,
+            username: teacher.username,
+            mobile: teacher.mobile,
+            email: teacher.email,
+            role: teacher.role,
+        },
+        status: data.status,
+        transId: data.tran_id,
+        tranDate: data.tran_date,
+        amount: data.currency_amount,
+    })
+
 
     if (data.status === 'VALID') {
 
-        let teacher = await TeacherModel.findOne({ _id: data.value_a })
+
 
         teacher['batch'] = {
             isPremium: true,

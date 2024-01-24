@@ -2,11 +2,28 @@
 
 const { default: mongoose } = require("mongoose")
 const { BatchModel } = require("../../Models/BatchModel")
-
+const { TransactionModel } = require("../../Models/TransactionModel")
+const { StudentModel } = require("../../Models/StudentModel")
 
 const joiningBatchIpn = async (req, res) => {
 
     let data = req.body
+
+    let student = await StudentModel.findOne({ _id: data.value_a })
+
+    await TransactionModel.create({
+        userInfo: {
+            userId: student._id,
+            username: student.username,
+            mobile: student.mobile,
+            email: student.email,
+            role: student.role,
+        },
+        status: data.status,
+        transId: data.tran_id,
+        tranDate: data.tran_date,
+        amount: data.currency_amount,
+    })
 
     if (data.status === 'VALID') {
 
