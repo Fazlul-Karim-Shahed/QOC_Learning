@@ -7,7 +7,7 @@ const { getAllTransactions } = require('../Controllers/TransactionController/get
 
 
 
-router.get('/', roleCheck('admin'), getAllTransactions )
+router.get('/', roleCheck('admin'), getAllTransactions)
 
 
 

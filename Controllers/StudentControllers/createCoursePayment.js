@@ -2,25 +2,25 @@
 const { default: axios } = require('axios')
 const formData = require('form-data')
 const generateUniqueId = require('generate-unique-id')
-const { TeacherModel } = require('../../Models/TeacherModel')
+const { StudentModel } = require('../../Models/StudentModel')
 
 
-const createTeacherPayment = async (req, res) => {
+const createCoursePayment = async (req, res) => {
 
-    let data = await TeacherModel.findOne({ _id: req.body.teacherId })
+    let data = await StudentModel.findOne({ _id: req.body.studentId })
 
     const payData = {
 
         store_id: 'shahe6596af62b67e9',
         store_passwd: 'shahe6596af62b67e9@ssl',
-        total_amount: 500,
+        total_amount: 2500,
         currency: 'BDT',
         tran_id: generateUniqueId({ length: 20, useNumbers: true, useLetters: true }),
         product_category: 'online_service',
         success_url: 'https://qoc-learning.web.app/success',
         fail_url: 'https://qoc-learning.web.app/fail',
         cancel_url: 'https://qoc-learning.web.app/cancel',
-        ipn_url: 'https://qoc-learning.onrender.com/api/teacher/payment/ipn',
+        ipn_url: 'https://qoc-learning.onrender.com/api/student/course/payment/ipn',
 
 
         // EMI Transaction
@@ -43,12 +43,12 @@ const createTeacherPayment = async (req, res) => {
         logistic_delivery_type: '',
 
         //Product Information
-        product_name: 'Batch',
+        product_name: 'Course payment',
         product_category: 'Online Service',
         product_profile: 'non-physical-goods',
 
         //Additional Information
-        value_a: req.body.teacherId,
+        value_a: req.body.studentId,
     }
 
 
@@ -67,4 +67,4 @@ const createTeacherPayment = async (req, res) => {
 }
 
 
-module.exports.createTeacherPayment = createTeacherPayment
+module.exports.createCoursePayment = createCoursePayment
