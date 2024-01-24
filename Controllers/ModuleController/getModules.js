@@ -19,7 +19,7 @@ const getModules = async (req, res) => {
         if (user) {
             if (user.role != 'admin') {
 
-                if (user.hasOwnProperty('course') && user.course.isPremium) {
+                if (user.toObject().hasOwnProperty('course') && user.course.isPremium) {
 
                     ModuleModel.find({ chapterId: req.params.chapterId }).populate(['subjectId', 'curriculumId', 'chapterId']).then(data => {
 

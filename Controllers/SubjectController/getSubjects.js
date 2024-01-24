@@ -17,7 +17,7 @@ const getSubjects = async (req, res) => {
 
             if (user.role != 'admin') {
 
-                if (user.hasOwnProperty('course') && user.course.isPremium) {
+                if (user.toObject().hasOwnProperty('course') && user.course.isPremium) {
 
                     SubjectModel.find({ curriculumId: req.params.curriculumId }).populate(['curriculumId']).then(data => {
                         res.status(200).send({ message: 'All Subjects ', error: false, data: data })
