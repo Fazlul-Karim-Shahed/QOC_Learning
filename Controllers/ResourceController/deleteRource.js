@@ -8,7 +8,7 @@ const deleteResource = async (req, res) => {
 
     if (resource) {
 
-        res.status(200).send({ message: 'Deleted', error: false, data: resource })
+        res.status(200).send({ message: 'Resource Deleted', error: false, data: resource })
     }
     else {
         res.send({ message: 'Not delete', error: true })
