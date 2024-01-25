@@ -9,6 +9,8 @@ const ipn = async (req, res) => {
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 
+    console.log(data.status)
+
     await TransactionModel.create({
         userInfo: {
             userId: student._id,
