@@ -1,20 +1,20 @@
 const { StudentModel } = require("../../Models/StudentModel")
 
 
-const setCoursePremium = async (req, res) => {
+const setAssignmentPremium = async (req, res) => {
 
     let student = await StudentModel.findOne({ _id: req.params.studentId })
 
     if (student) {
 
-        student['course'] = {
+        student['assignment'] = {
             isPremium: true,
             startTime: new Date().toLocaleString(),
             endTime: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(),
         }
 
         student.save().then(data => {
-            res.send({ message: 'Student is assigned for course Premium', error: false, data: data })
+            res.send({ message: 'Student is assigned for assignment Premium', error: false, data: data })
         })
             .catch(err => {
                 res.send({ message: 'Failed to assigned student as Premium', error: true, data: err.message })
@@ -27,4 +27,4 @@ const setCoursePremium = async (req, res) => {
 
 }
 
-module.exports.setCoursePremium = setCoursePremium
+module.exports.setAssignmentPremium = setAssignmentPremium
