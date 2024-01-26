@@ -60,7 +60,7 @@ app.get('/api', (req, res) => {
 
 
 // ------------ Server ------------ //
-const port = process.env.PORT
+const port = process.env.PORT | 9085
 app.listen(port, () => {
     console.log('Server is running on port ' + port);
 })
