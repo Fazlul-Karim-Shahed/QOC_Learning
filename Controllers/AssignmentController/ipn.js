@@ -11,11 +11,13 @@ const ipn = async (req, res) => {
 
     await TransactionModel.create({
         userInfo: {
+
             userId: student._id,
             username: student.username,
             mobile: student.mobile,
             email: student.email,
             role: student.role,
+            
         },
         status: data.status,
         transId: data.tran_id,

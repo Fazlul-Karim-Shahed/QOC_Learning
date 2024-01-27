@@ -22,7 +22,7 @@ const setCoursePremium = async (req, res) => {
             })
     }
     else {
-        res.status(404).send({ message: 'student not found', error: true })
+        res.send({ message: 'student not found', error: true })
     }
 
 }
