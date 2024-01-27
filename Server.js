@@ -32,13 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(compression());
 
-// Local DB
-// mongoose.connect(process.env.MONGODB_LOCAL + '/QOC_Learning')
-//     .then(data => console.log('Successfully connected to MongoDB Server'))
-//     .catch(data => {
-//         console.log(data);
-//         console.log('Something went wrong with MongoDB Server')
-//     })
+
 
 
 // ------------ Database ------------  //
