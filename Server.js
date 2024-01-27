@@ -71,15 +71,16 @@ app.use("/api/focus", FocusRouters);
 app.use("/api/resource", ResourceRouters);
 app.use("/api/transaction", TransactionRouters);
 
+
 app.get("/", (req, res) => {
   res.send({ message: "Hey backend is here!!!", error: false });
 });
 
 // Express async error handlers
 app.use((err, req, res, next) => {
-    if (err) return res.send({ message: err.message, error: true })
+  // console.log(err)
+  if (err) return res.send({ message: err, error: true });
 });
-
 
 // ------------ Server ------------ //
 
