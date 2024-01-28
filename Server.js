@@ -25,13 +25,13 @@ const TransactionRouters = require("./Routers/TransactionRouters");
 
 // ------------ Configuration ------------  //
 
-app.options("*", cors({ origin: 'https://qoc.koncept-tech.com/', optionsSuccessStatus: 200}))
 
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "50mb" }));
+app.options("*", cors({ origin: '*', optionsSuccessStatus: 200}))
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: 'https://qoc.koncept-tech.com/', optionsSuccessStatus: 200}));
+app.use(cors({ origin: '*', optionsSuccessStatus: 200}));
 app.use(compression());
 
 
