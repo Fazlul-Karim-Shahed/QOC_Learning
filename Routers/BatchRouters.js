@@ -28,8 +28,4 @@ router.get('/dashboard/:batchId/teacher', roleCheck('teacher'), premiumCheck('ba
 router.get('/dashboard/:batchId/student', roleCheck('student'), getBatchDashboard)
 router.get('/dashboard/:batchId/admin', roleCheck('admin'), getBatchDashboard)
 
-///
-
-
-
 module.exports = router

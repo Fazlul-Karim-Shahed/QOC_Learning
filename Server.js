@@ -25,20 +25,16 @@ const TransactionRouters = require("./Routers/TransactionRouters");
 
 // ------------ Configuration ------------  //
 
+
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "50mb" }));
+app.options("*", cors({ origin: '*', optionsSuccessStatus: 200}))
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({ origin: '*', optionsSuccessStatus: 200}));
 app.use(compression());
 
-// Local DB
-// mongoose.connect(process.env.MONGODB_LOCAL + '/QOC_Learning')
-//     .then(data => console.log('Successfully connected to MongoDB Server'))
-//     .catch(data => {
-//         console.log(data);
-//         console.log('Something went wrong with MongoDB Server')
-//     })
+
 
 
 // ------------ Database ------------  //
@@ -59,7 +55,6 @@ mongoose
   });
 
 
-
 // ------------ All Routers ------------ //
 app.use("/api/auth", AuthRouters);
 app.use("/api/tuition", TuitionRouters);
@@ -78,6 +73,7 @@ app.use("/api/focus", FocusRouters);
 app.use("/api/resource", ResourceRouters);
 app.use("/api/transaction", TransactionRouters);
 
+
 app.get("/", (req, res) => {
   res.send({ message: "Hey backend is here!!!", error: false });
 });
@@ -89,7 +85,8 @@ app.use((err, req, res, next) => {
 });
 
 // ------------ Server ------------ //
-const port = process.env.PORT;
+
+const port = process.env.PORT | 9085
 app.listen(port, () => {
-  console.log("Server is running on port " + port);
-});
+    console.log('Server is running on port ' + port);
+})
