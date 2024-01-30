@@ -6,7 +6,7 @@ const { TransactionModel } = require("../../Models/TransactionModel")
 const coursePaymentIpn = async (req, res) => {
 
     let data = req.body
-    console.log('Course: ', req)
+    console.log('Course: ', data)
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 
@@ -22,6 +22,8 @@ const coursePaymentIpn = async (req, res) => {
         transId: data.tran_id,
         tranDate: data.tran_date,
         amount: data.currency_amount,
+    }).then(data => {
+        console.log('Transaction: ', data)
     })
 
 
@@ -35,8 +37,10 @@ const coursePaymentIpn = async (req, res) => {
         }
 
         student.save().then(data => {
+            console.log('Data: ', data)
             res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
         }).catch(err => {
+            console.log('Err: ', err)
             res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
         })
 
