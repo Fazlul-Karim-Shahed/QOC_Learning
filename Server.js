@@ -29,7 +29,6 @@ const TransactionRouters = require("./Routers/TransactionRouters");
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "50mb" }));
-
 app.options("*", cors({ origin: '*', optionsSuccessStatus: 200}))
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*', optionsSuccessStatus: 200}));
