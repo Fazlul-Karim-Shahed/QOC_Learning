@@ -45,18 +45,18 @@ const joiningBatchIpn = async (req, res) => {
         }).then(data => {
 
             console.log('data: ', data)
-            // res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
+            res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
 
         }).catch(err => {
             console.log('Er: ', err)
-            // res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
+            res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
         })
 
 
     }
     else {
         console.error('Something went wrong while joining batch payments service. Please contact with QOC management')
-        // res.send({ message: 'Transaction status: ' + data.status, error: true })
+        res.send({ message: 'Transaction status: ' + data.status, error: true })
 
     }
 
