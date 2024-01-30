@@ -13,6 +13,8 @@ const joiningBatchIpn = async (req, res) => {
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 
+    console.log('Student: ', student)
+
     await TransactionModel.create({
 
         userInfo: {
