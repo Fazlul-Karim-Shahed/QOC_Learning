@@ -6,6 +6,7 @@ const { TransactionModel } = require("../../Models/TransactionModel")
 const coursePaymentIpn = async (req, res) => {
 
     let data = req.body
+    console.log('Course: ', req)
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 

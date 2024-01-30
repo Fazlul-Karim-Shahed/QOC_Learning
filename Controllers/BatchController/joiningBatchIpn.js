@@ -9,6 +9,8 @@ const joiningBatchIpn = async (req, res) => {
 
     let data = req.body
 
+    console.log('Joining Batch: ',req)
+
     let student = await StudentModel.findOne({ _id: data.value_a })
 
     await TransactionModel.create({
@@ -24,9 +26,6 @@ const joiningBatchIpn = async (req, res) => {
         tranDate: data.tran_date,
         amount: data.currency_amount,
     })
-
-
-    console.log(data.status)
 
     
     if (data.status === 'VALID') {
