@@ -7,7 +7,7 @@ const ipn = async (req, res) => {
 
     let data = req.body
 
-    console.log('Assignment: ', req)
+    console.log('Assignment: ', data)
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 
@@ -37,15 +37,17 @@ const ipn = async (req, res) => {
         }
 
         student.save().then(data => {
+            console.log('Ass saves: ', data)
             res.send({ message: `Transaction status: ${data.status}. Assignment premium service activated till ${new Date(data.assignment.endTime).toLocaleString()}`, error: false, data: data });
         }).catch(err => {
+            console.log('Ass err: ', err)
             res.send({ message: 'Something went wrong while activating assignment premium service. Please contact with QOC management', error: true, data: err.message });
         })
 
 
     }
     else {
-
+        console.log('Assignment wrong')
         res.send({ message: 'Transaction status: ' + data.status, error: true })
     }
 

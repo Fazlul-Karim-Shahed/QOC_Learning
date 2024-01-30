@@ -9,11 +9,12 @@ const joiningBatchIpn = async (req, res) => {
 
     let data = req.body
 
-    console.log('Joining Batch: ', body.status)
+    console.log('Joining Batch: ', data)
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 
     await TransactionModel.create({
+
         userInfo: {
             userId: student._id,
             username: student.username,
