@@ -9,7 +9,7 @@ const joiningBatchIpn = async (req, res) => {
 
     let data = req.body
 
-    console.log('Joining Batch: ',req)
+    console.log('Joining Batch: ', body.status)
 
     let student = await StudentModel.findOne({ _id: data.value_a })
 
@@ -25,12 +25,14 @@ const joiningBatchIpn = async (req, res) => {
         transId: data.tran_id,
         tranDate: data.tran_date,
         amount: data.currency_amount,
+    }).then(data => {
+        console.log('Transaction: ', data)
+    }).catch(err => {
+        console.log('Eroro: ', err)
     })
 
-    
+
     if (data.status === 'VALID') {
-
-
 
         BatchModel.updateOne({ _id: data.value_a }, {
             $push: {
@@ -42,19 +44,19 @@ const joiningBatchIpn = async (req, res) => {
             }
         }).then(data => {
 
-            console.log(data)
-            res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
+            console.log('data: ', data)
+            // res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
 
         }).catch(err => {
-            console.log(err)
-            res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
+            console.log('Er: ', err)
+            // res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
         })
 
 
     }
     else {
-
-        res.send({ message: 'Transaction status: ' + data.status, error: true })
+        console.error('Something went wrong while joining batch payments service. Please contact with QOC management')
+        // res.send({ message: 'Transaction status: ' + data.status, error: true })
 
     }
 
