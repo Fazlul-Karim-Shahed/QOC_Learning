@@ -11,7 +11,7 @@ const joiningBatchIpn = async (req, res) => {
 
     // console.log('Joining Batch: ', data)
 
-    let student = await StudentModel.findOne({ _id: data.value_a })
+    let student = await StudentModel.findOne({ _id: new mongoose.Schema.Types.ObjectId(data.value_a) })
 
     console.log('Student: ', student)
 
@@ -35,33 +35,33 @@ const joiningBatchIpn = async (req, res) => {
     })
 
 
-    // if (data.status === 'VALID') {
+    if (data.status === 'VALID') {
 
-    //     BatchModel.updateOne({ _id: data.value_a }, {
-    //         $push: {
-    //             enrolledStudents: {
-    //                 studentId: new mongoose.Types.ObjectId(data.value_b),
-    //                 createdAt: new Date().toLocaleString(),
-    //                 transaction: data.tran_id,
-    //             }
-    //         }
-    //     }).then(data => {
+        BatchModel.updateOne({ _id: data.value_a }, {
+            $push: {
+                enrolledStudents: {
+                    studentId: new mongoose.Types.ObjectId(data.value_b),
+                    createdAt: new Date().toLocaleString(),
+                    transaction: data.tran_id,
+                }
+            }
+        }).then(data => {
 
-    //         console.log('data: ', data)
-    //         res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
+            console.log('data: ', data)
+            res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
 
-    //     }).catch(err => {
-    //         console.log('Er: ', err)
-    //         res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
-    //     })
+        }).catch(err => {
+            console.log('Er: ', err)
+            res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
+        })
 
 
-    // }
-    // else {
-    //     console.error('Something went wrong while joining batch payments service. Please contact with QOC management')
-    //     res.send({ message: 'Transaction status: ' + data.status, error: true })
+    }
+    else {
+        console.error('Something went wrong while joining batch payments service. Please contact with QOC management')
+        res.send({ message: 'Transaction status: ' + data.status, error: true })
 
-    // }
+    }
 
 
 }
