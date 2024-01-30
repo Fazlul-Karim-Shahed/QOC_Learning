@@ -79,7 +79,7 @@ app.get("/", (req, res) => {
 
 // Express async error handlers
 app.use((err, req, res, next) => {
-  // console.log(err)
+  console.log(err)
   if (err) return res.send({ message: err, error: true });
 });
 
