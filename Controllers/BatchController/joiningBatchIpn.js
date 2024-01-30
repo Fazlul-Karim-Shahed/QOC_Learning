@@ -11,7 +11,7 @@ const joiningBatchIpn = async (req, res) => {
 
     // console.log('Joining Batch: ', data)
 
-    let student = await StudentModel.findOne({ _id: new mongoose.Schema.Types.ObjectId(data.value_a) })
+    let student = await StudentModel.findOne({ _id: new mongoose.Schema.Types.ObjectId(data.value_b) })
 
     console.log('Student: ', student)
 
