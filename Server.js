@@ -29,11 +29,11 @@ const TransactionRouters = require("./Routers/TransactionRouters");
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "50mb" }));
+
 app.options("*", cors({ origin: '*', optionsSuccessStatus: 200}))
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*', optionsSuccessStatus: 200}));
 app.use(compression());
-
 
 
 
@@ -88,5 +88,5 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT | 9085
 app.listen(port, () => {
-    console.log('Server is running on port ' + port);
+  console.log('Server is running on port ' + port);
 })
