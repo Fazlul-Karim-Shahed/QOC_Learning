@@ -46,7 +46,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((data) => console.log("Successfully connected to MongoDB Server"))
+  .then((data) => console.log("Successfully connected to MongoDB Server!"))
   .catch((data) => {
     console.log("Something went wrong with MongoDB Server");
     console.log(data);
