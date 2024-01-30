@@ -7,6 +7,8 @@ const ipn = async (req, res) => {
 
     let data = req.body
 
+    console.log('Assignment: ', req)
+
     let student = await StudentModel.findOne({ _id: data.value_a })
 
     await TransactionModel.create({
@@ -17,7 +19,7 @@ const ipn = async (req, res) => {
             mobile: student.mobile,
             email: student.email,
             role: student.role,
-            
+
         },
         status: data.status,
         transId: data.tran_id,
@@ -43,7 +45,7 @@ const ipn = async (req, res) => {
 
     }
     else {
-        
+
         res.send({ message: 'Transaction status: ' + data.status, error: true })
     }
 
