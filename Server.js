@@ -36,7 +36,6 @@ app.use(cors({ origin: '*', optionsSuccessStatus: 200}));
 app.use(compression());
 
 
-
 // ------------ Database ------------  //
 const DB = process.env.MONGODB_DATABASE.replace(
   "<password>",

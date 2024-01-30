@@ -25,9 +25,13 @@ const joiningBatchIpn = async (req, res) => {
         amount: data.currency_amount,
     })
 
-    console.log(data)
 
+    console.log(data.status)
+
+    
     if (data.status === 'VALID') {
+
+
 
         BatchModel.updateOne({ _id: data.value_a }, {
             $push: {
