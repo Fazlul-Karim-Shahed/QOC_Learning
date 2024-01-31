@@ -18,7 +18,7 @@ const signup = async (req, res) => {
     }
     else {
 
-        data = _.pick(req.body, ['username', 'email', 'password', 'mobile', 'role']);
+        data = _.pick(req.body, ['username', 'email', 'password', 'mobile', 'role', 'curriculumId']);
         let salt = await bcrypt.genSalt(10)
         let hashedPass = await bcrypt.hash(data.password, salt)
 
@@ -28,7 +28,7 @@ const signup = async (req, res) => {
 
         data = data.save().then(data => {
 
-            const token = jwt.sign(_.pick(data, ['username', 'role', 'email', '_id', 'mobile']), process.env.SECRET_KEY, { expiresIn: '10h' })
+            const token = jwt.sign(_.pick(data, ['username', 'role', 'email', '_id', 'mobile', 'curriculumId']), process.env.SECRET_KEY, { expiresIn: '10h' })
             res.send({
                 message: 'Registration complete', error: false, value: {
                     token: token

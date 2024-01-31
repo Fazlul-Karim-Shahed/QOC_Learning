@@ -1,17 +1,33 @@
 
 
-const { StudentModel } = require('../../Models/StudentModel')
+const { StudentModel } = require('../../Models/StudentModel');
+const { TransactionModel } = require('../../Models/TransactionModel');
+const { ExamModel } = require('../../Models/ExamModel');
+const { AssignmentModel } = require('../../Models/AssignmentModel');
+const { BatchModel } = require('../../Models/BatchModel');
+const { default: mongoose } = require('mongoose');
+const { UpcomingCourseModel } = require('../../Models/UpcomingCourseModel');
 
 const getAllActivity = async (req, res) => {
 
-    await StudentModel.find().then(data => {
+    let submittedExam = await ExamModel.find({ "participants.studentId": new mongoose.Types.ObjectId(req.params.studentId) })
 
-        res.status(200).send({ message: 'All students', error: false, data: data })
+    let postedAssignment = await AssignmentModel.find({ studentId: new mongoose.Types.ObjectId(req.params.studentId) })
 
+    let batches = await BatchModel.find({ "enrolledStudents.studentId": new mongoose.Types.ObjectId(req.params.studentId) })
+
+    let upcoming = await UpcomingCourseModel.find({ curriculumId: new mongoose.Types.ObjectId(req.user.curriculumId) })
+
+
+    res.status(200).send({
+        message: 'All activity', error: false, data: {
+            submittedExam: submittedExam,
+            postedAssignment: postedAssignment,
+            batches: batches,
+            upcomingCourse: upcoming,
+
+        }
     })
-        .catch(err => {
-            res.send({ message: 'No student found', error: true, data: err })
-        })
 
 
 }

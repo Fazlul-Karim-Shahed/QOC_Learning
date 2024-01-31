@@ -1,5 +1,6 @@
 const { coursePaymentIpn } = require('../Controllers/StudentControllers/coursePaymentIpn')
 const { createCoursePayment } = require('../Controllers/StudentControllers/createCoursePayment')
+const { getAllActivity } = require('../Controllers/StudentControllers/getAllActivity')
 const { getAllStudent } = require('../Controllers/StudentControllers/getAllStuents')
 const { getStudentAllTuition } = require('../Controllers/StudentControllers/getStudentAllTuition')
 const { getStudentById } = require('../Controllers/StudentControllers/getStudentById')
@@ -16,9 +17,10 @@ router.get('/', roleCheck('admin'), getAllStudent)
 router.put('/:studentId', updateStudent)
 
 router.put('/set-assignment-premium/:studentId', roleCheck('admin'), setAssignmentPremium)
-router.put('/set-course-premium/:studentId', roleCheck('admin'),setCoursePremium)
+router.put('/set-course-premium/:studentId', roleCheck('admin'), setCoursePremium)
 
 router.post('/course/payment', roleCheck('student'), createCoursePayment)
 router.post('/course/payment/ipn', coursePaymentIpn)
+router.get('/activity/:studentId', roleCheck('student'), getAllActivity)
 
 module.exports = router

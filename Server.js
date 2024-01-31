@@ -22,6 +22,7 @@ const BatchRouters = require("./Routers/BatchRouters");
 const FocusRouters = require("./Routers/FocusRouters");
 const ResourceRouters = require("./Routers/ResourceRouters");
 const TransactionRouters = require("./Routers/TransactionRouters");
+const UpcomingCourseRouters = require("./Routers/UpcomingCourseRouters");
 
 // ------------ Configuration ------------  //
 
@@ -70,6 +71,7 @@ app.use("/api/batch", BatchRouters);
 app.use("/api/focus", FocusRouters);
 app.use("/api/resource", ResourceRouters);
 app.use("/api/transaction", TransactionRouters);
+app.use("/api/upcoming-course", UpcomingCourseRouters);
 
 
 
