@@ -20,7 +20,7 @@ const createCoursePayment = async (req, res) => {
         success_url: 'https://qoc-learning.web.app/success',
         fail_url: 'https://qoc-learning.web.app/fail',
         cancel_url: 'https://qoc-learning.web.app/cancel',
-        ipn_url: 'https://qoc-learning.onrender.com/api/student/course/payment/ipn',
+        ipn_url: 'https://qoc.api.koncept-tech.com/api/student/course/payment/ipn',
 
 
         // EMI Transaction

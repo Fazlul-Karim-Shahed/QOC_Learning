@@ -17,9 +17,9 @@ const createAssignmentPayment = async (req, res) => {
         currency: 'BDT',
         tran_id: generateUniqueId({ length: 20, useNumbers: true, useLetters: true }),
         product_category: 'online_service',
-        success_url: 'https://qoc-learning.web.app/success',
-        fail_url: 'https://qoc-learning.web.app/fail',
-        cancel_url: 'https://qoc-learning.web.app/cancel',
+        success_url: 'https://qoc.koncept-tech.com/success',
+        fail_url: 'https://qoc.koncept-tech.com/fail',
+        cancel_url: 'https://qoc.koncept-tech.com/cancel',
         ipn_url: 'https://qoc.api.koncept-tech.com/api/assignment/payment/ipn',
 
 
