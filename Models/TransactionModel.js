@@ -4,6 +4,8 @@ const { model, Schema } = require('mongoose')
 
 const TransactionModel = model('Transaction', new Schema({
 
+    title: { type: String, required: true },
+
     userInfo: {
         userId: String,
         username: String,
@@ -15,7 +17,7 @@ const TransactionModel = model('Transaction', new Schema({
     transId: { type: String, required: true },
     tranDate: { type: String, required: true },
     amount: { type: Number, required: true },
-    
+
 }, { timestamps: true }))
 
 

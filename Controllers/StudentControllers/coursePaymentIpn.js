@@ -21,6 +21,7 @@ const coursePaymentIpn = async (req, res) => {
         transId: data.tran_id,
         tranDate: data.tran_date,
         amount: data.currency_amount,
+        title: 'Premium Course'
     })
 
     if (data.status === 'VALID') {

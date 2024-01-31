@@ -18,6 +18,8 @@ const getAllActivity = async (req, res) => {
 
     let upcoming = await UpcomingCourseModel.find({ curriculumId: new mongoose.Types.ObjectId(req.user.curriculumId) })
 
+    let transactions = await TransactionModel.find({ "userInfo.userId": new mongoose.Types.ObjectId(req.params.studentId) }).sort({ tranDate: -1 });
+
 
     res.status(200).send({
         message: 'All activity', error: false, data: {
@@ -25,7 +27,7 @@ const getAllActivity = async (req, res) => {
             postedAssignment: postedAssignment,
             batches: batches,
             upcomingCourse: upcoming,
-
+            transactions: transactions
         }
     })
 
