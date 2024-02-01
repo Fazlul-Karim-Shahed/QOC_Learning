@@ -41,7 +41,7 @@ const createExam = async (req, res) => {
 
             for (let i = 0; i < req.body.numberOfMcq; i++) {
 
-                let mcqId = await generateRandValue(mcq, mcqsId)
+                let mcqId = generateRandValue(mcq, mcqsId)
                 mcqsId.push(mcqId)
             }
 

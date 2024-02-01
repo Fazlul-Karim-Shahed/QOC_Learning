@@ -10,7 +10,7 @@ const { UpcomingCourseModel } = require('../../Models/UpcomingCourseModel');
 
 const getAllActivity = async (req, res) => {
 
-    let submittedExam = await ExamModel.find({ "participants.studentId": new mongoose.Types.ObjectId(req.params.studentId) })
+    let submittedExam = await ExamModel.find({ "participants.studentId": new mongoose.Types.ObjectId(req.params.studentId) }).sort({ startTime: -1 });
 
     let postedAssignment = await AssignmentModel.find({ studentId: new mongoose.Types.ObjectId(req.params.studentId) })
 
