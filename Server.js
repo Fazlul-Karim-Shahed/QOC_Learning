@@ -30,9 +30,9 @@ const UpcomingCourseRouters = require("./Routers/UpcomingCourseRouters");
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "50mb" }));
-app.options("*", cors({ origin: '*', optionsSuccessStatus: 200}))
+app.options("*", cors({ origin: '*', optionsSuccessStatus: 200 }))
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: '*', optionsSuccessStatus: 200}));
+app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
 app.use(compression());
 
 
@@ -74,10 +74,11 @@ app.use("/api/transaction", TransactionRouters);
 app.use("/api/upcoming-course", UpcomingCourseRouters);
 
 
+app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
+app.post('/success', (req, res) => res.redirect('https://qoc.koncept-tech.com/success'))
+app.post('/fail', (req, res) => res.redirect('https://qoc.koncept-tech.com/fail'))
+app.post('/cancel', (req, res) => res.redirect('https://qoc.koncept-tech.com/cancel'))
 
-app.get("/", (req, res) => {
-  res.send({ message: "Hey backend is here!!!", error: false });
-});
 
 // Express async error handlers
 app.use((err, req, res, next) => {

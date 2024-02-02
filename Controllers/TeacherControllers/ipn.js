@@ -27,8 +27,6 @@ const ipn = async (req, res) => {
 
     if (data.status === 'VALID') {
 
-
-
         teacher['batch'] = {
             isPremium: true,
             startTime: new Date().toLocaleString(),

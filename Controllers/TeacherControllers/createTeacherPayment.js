@@ -13,13 +13,13 @@ const createTeacherPayment = async (req, res) => {
 
         store_id: 'shahe6596af62b67e9',
         store_passwd: 'shahe6596af62b67e9@ssl',
-        total_amount: 500,
+        total_amount: 5000,
         currency: 'BDT',
         tran_id: generateUniqueId({ length: 20, useNumbers: true, useLetters: true }),
         product_category: 'online_service',
-        success_url: 'https://qoc-learning.web.app/success',
-        fail_url: 'https://qoc-learning.web.app/fail',
-        cancel_url: 'https://qoc-learning.web.app/cancel',
+        success_url: 'https://qoc.api.koncept-tech.com/success',
+        fail_url: 'https://qoc.api.koncept-tech.com/fail',
+        cancel_url: 'https://qoc.api.koncept-tech.com/cancel',
         ipn_url: 'https://qoc.api.koncept-tech.com/api/teacher/payment/ipn',
 
 
