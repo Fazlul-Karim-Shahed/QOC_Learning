@@ -32,7 +32,7 @@ const ipn = async (req, res) => {
         teacher['batch'] = {
             isPremium: true,
             startTime: new Date().toLocaleString(),
-            endTime: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(),
+            endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
             transaction: data.tran_id
         }
 
