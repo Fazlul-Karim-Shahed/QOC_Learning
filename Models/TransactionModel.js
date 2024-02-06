@@ -13,10 +13,12 @@ const TransactionModel = model('Transaction', new Schema({
         email: String,
         role: String,
     },
-    status: { type: String, required: true },
-    transId: { type: String, required: true },
-    tranDate: { type: String, required: true },
-    amount: { type: Number, required: true },
+    id_token: { type: String, required: true },
+    paymentID: { type: String, required: true },
+    status: { type: String },
+    tranDate: { type: String },
+    amount: { type: Number },
+    payerReference: { type: String }
 
 }, { timestamps: true }))
 

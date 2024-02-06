@@ -3,67 +3,63 @@ const { default: axios } = require('axios')
 const formData = require('form-data')
 const generateUniqueId = require('generate-unique-id')
 const { TeacherModel } = require('../../Models/TeacherModel')
+const { TransactionModel } = require('../../Models/TransactionModel')
 
 
 const createTeacherPayment = async (req, res) => {
 
-    let data = await TeacherModel.findOne({ _id: req.body.teacherId })
+    let teacher = await TeacherModel.findOne({ _id: req.body.teacherId })
 
-    const payData = {
-
-        store_id: 'shahe6596af62b67e9',
-        store_passwd: 'shahe6596af62b67e9@ssl',
-        total_amount: 5000,
+    axios.post(process.env.bkash_createPaymentApi, {
+        mode: '0000',
+        payerReference: teacher._id,
+        callbackURL: 'https://qoc.api.koncept-tech.com/api/teacher/payment/ipn',
+        amount: '5000',
         currency: 'BDT',
-        tran_id: generateUniqueId({ length: 20, useNumbers: true, useLetters: true }),
-        product_category: 'online_service',
-        success_url: 'https://qoc.api.koncept-tech.com/success',
-        fail_url: 'https://qoc.api.koncept-tech.com/fail',
-        cancel_url: 'https://qoc.api.koncept-tech.com/cancel',
-        ipn_url: 'https://qoc.api.koncept-tech.com/api/teacher/payment/ipn',
-
-
-        // EMI Transaction
-        emi_option: 0,
-
-        //Customer Information
-        cus_name: data.username ? data.username : 'Unknown',
-        cus_email: data.email ? data.email : 'unknown@gmail.com',
-        cus_add1: data.address ? data.address : 'Unknown',
-        cus_city: data.city ? data.city : 'Unknown',
-        cus_postcode: data.postCode ? data.zip : 'Unknown',
-        cus_country: data.country ? data.country : 'Unknown',
-        cus_phone: data.mobile ? data.mobile : 'Unknown',
-
-        //Shipping Information
-        shipping_method: 'NO',
-        num_of_item: 1,
-        weight_of_item: 0,
-        logistic_pickup_id: 'none',
-        logistic_delivery_type: '',
-
-        //Product Information
-        product_name: 'Batch',
-        product_category: 'Online Service',
-        product_profile: 'non-physical-goods',
-
-        //Additional Information
-        value_a: req.body.teacherId,
-    }
-
-
-
-    axios.post('https://sandbox.sslcommerz.com/gwprocess/v4/api.php', payData, {
+        intent: 'sale'
+    }, {
         headers: {
-            "content-type": 'multipart/form-data'
+            "Content-Type": 'application/json',
+            "Accept": "application/json",
+            "Authorization": req.id_token,
+            'X-App-Key': process.env.bkash_app_key
         }
     }).then(data => {
-        res.send({ message: 'Payment created successfully', error: false, data: data.data })
-    })
-        .catch(err => {
-            res.send({ message: 'Something went wrong while creating payment. Please contact with QOC management', error: true, data: err.message })
-        })
 
+        if (data.data.statusMessage === "Successful") {
+
+            TransactionModel.create({
+
+                userInfo: {
+                    userId: teacher._id,
+                    username: teacher.username,
+                    mobile: teacher.mobile,
+                    email: teacher.email,
+                    role: teacher.role,
+                },
+                paymentID: data.data.paymentID,
+                id_token: req.id_token,
+                title: 'Premium Teacher',
+                amount: 5000,
+                payerReference: teacher._id
+
+            }).then(tranData => {
+                res.send({ message: 'Payment Initiated', error: false, data: data.data })
+            }).catch(err => {
+                res.send({ message: 'Something went wrong while creating transaction model', error: true, data: err.message });
+            })
+
+
+        }
+        else {
+            res.send({ message: 'Something went wrong while initiating bkash payment', error: true, data: data.data });
+        }
+
+    }).catch(err => {
+
+        res.send({ message: 'Something went wrong while initiating bkash payment', error: true, data: err.message });
+
+    })
 }
 
 

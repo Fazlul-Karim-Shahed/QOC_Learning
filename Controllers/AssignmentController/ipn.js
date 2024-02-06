@@ -1,52 +1,56 @@
 
+const { default: axios } = require("axios")
 const { StudentModel } = require("../../Models/StudentModel")
 const { TransactionModel } = require("../../Models/TransactionModel")
 
 
 const ipn = async (req, res) => {
 
-    let data = req.body
+    let transaction = await TransactionModel.findOne({ paymentID: req.query.paymentID })
 
-    let student = await StudentModel.findOne({ _id: data.value_a })
+    axios.post(process.env.bkash_executePaymentApi, { paymentID: req.query.paymentID }, {
+        headers: {
+            "Accept": "application/json",
+            "Authorization": transaction.id_token,
+            'X-App-Key': process.env.bkash_app_key
+        }
+    }).then(data => {
 
-    await TransactionModel.create({
-        userInfo: {
+        transaction['status'] = req.query.status
+        transaction['tranDate'] = data.data.agreementExecuteTime
 
-            userId: student._id,
-            username: student.username,
-            mobile: student.mobile,
-            email: student.email,
-            role: student.role,
+        transaction.save().then(data => {
+            console.log('Transaction saved successfully')
+        })
 
-        },
-        status: data.status,
-        transId: data.tran_id,
-        tranDate: data.tran_date,
-        amount: data.currency_amount,
-        title: 'Assignment'
     })
 
-    if (data.status === 'VALID') {
+    let student = await StudentModel.findOne({ _id: transaction.userInfo.userId })
+
+
+    if (req.query.status === 'success') {
 
         student['assignment'] = {
             isPremium: true,
             startTime: new Date().toLocaleString(),
             endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
-            transaction: data.tran_id
+            transaction: req.query.paymentID
         }
 
         student.save().then(data => {
-            console.log('Ass saved: ', data)
-            
+
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+
         }).catch(err => {
             console.log('Ass err: ', err)
-            
+
         })
 
 
     }
     else {
-        console.log('Assignment wrong')
+
+        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
     }
 
 

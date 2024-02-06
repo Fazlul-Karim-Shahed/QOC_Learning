@@ -4,56 +4,55 @@ const { default: mongoose } = require("mongoose")
 const { BatchModel } = require("../../Models/BatchModel")
 const { TransactionModel } = require("../../Models/TransactionModel")
 const { StudentModel } = require("../../Models/StudentModel")
+const { default: axios } = require("axios")
 
 const joiningBatchIpn = async (req, res) => {
 
-    let data = req.body
 
+    let transaction = await TransactionModel.findOne({ paymentID: req.query.paymentID })
 
-    let student = await StudentModel.findOne({ _id: new mongoose.Types.ObjectId(data.value_b) })
+    axios.post(process.env.bkash_executePaymentApi, { paymentID: req.query.paymentID }, {
+        headers: {
+            "Accept": "application/json",
+            "Authorization": transaction.id_token,
+            'X-App-Key': process.env.bkash_app_key
+        }
+    }).then(data => {
 
+        transaction['status'] = req.query.status
+        transaction['tranDate'] = data.data.agreementExecuteTime
 
-
-    await TransactionModel.create({
-
-        userInfo: {
-            userId: student._id,
-            username: student.username,
-            mobile: student.mobile,
-            email: student.email,
-            role: student.role,
-        },
-        status: data.status,
-        transId: data.tran_id,
-        tranDate: data.tran_date,
-        amount: data.currency_amount,
-        title: 'Joining Batch'
+        transaction.save()
+        
     })
 
 
-    if (data.status === 'VALID') {
+    let student = await StudentModel.findOne({ _id: new mongoose.Types.ObjectId(transaction.userInfo.userId) })
 
-        BatchModel.updateOne({ _id: data.value_a }, {
+
+
+    if (req.query.status === 'success') {
+
+        BatchModel.updateOne({ _id: transaction.payerReference }, {
             $push: {
                 enrolledStudents: {
-                    studentId: new mongoose.Types.ObjectId(data.value_b),
+                    studentId: new mongoose.Types.ObjectId(student._id),
                     createdAt: new Date().toLocaleString(),
-                    transaction: data.tran_id,
+                    transaction: transaction.paymentID,
                 }
             }
         }).then(data => {
 
-            console.log('data: ', data)
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
 
         }).catch(err => {
-            console.log('Er: ', err)
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
         })
 
 
     }
     else {
-        console.error('Something went wrong while joining batch payments service. Please contact with QOC management')
-
+        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
     }
 
 

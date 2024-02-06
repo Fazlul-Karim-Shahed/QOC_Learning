@@ -75,9 +75,6 @@ app.use("/api/upcoming-course", UpcomingCourseRouters);
 
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
-app.post('/success', (req, res) => res.redirect('https://qoc.koncept-tech.com/success'))
-app.post('/fail', (req, res) => res.redirect('https://qoc.koncept-tech.com/fail'))
-app.post('/cancel', (req, res) => res.redirect('https://qoc.koncept-tech.com/cancel'))
 
 
 // Express async error handlers

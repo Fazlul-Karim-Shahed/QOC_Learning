@@ -1,52 +1,56 @@
 
+const { default: axios } = require("axios")
 const { TeacherModel } = require("../../Models/TeacherModel")
 const { TransactionModel } = require("../../Models/TransactionModel")
+const { default: mongoose } = require("mongoose")
 
 
 const ipn = async (req, res) => {
 
-    let data = req.body
 
-    let teacher = await TeacherModel.findOne({ _id: data.value_a })
+    let transaction = await TransactionModel.findOne({ paymentID: req.query.paymentID })
 
-    await TransactionModel.create({
-        userInfo: {
-            userId: teacher._id,
-            username: teacher.username,
-            mobile: teacher.mobile,
-            email: teacher.email,
-            role: teacher.role,
-        },
-        status: data.status,
-        transId: data.tran_id,
-        tranDate: data.tran_date,
-        amount: data.currency_amount,
-        title: 'Premium Teacher'
+    axios.post(process.env.bkash_executePaymentApi, { paymentID: req.query.paymentID }, {
+        headers: {
+            "Accept": "application/json",
+            "Authorization": transaction.id_token,
+            'X-App-Key': process.env.bkash_app_key
+        }
+    }).then(data => {
+
+        transaction['status'] = req.query.status
+        transaction['tranDate'] = data.data.agreementExecuteTime
+
+        transaction.save()
+
     })
 
 
-    if (data.status === 'VALID') {
+    let teacher = await TeacherModel.findOne({ _id: new mongoose.Types.ObjectId(transaction.userInfo.userId) })
+
+   
+
+
+    if (req.query.status === 'success') {
 
         teacher['batch'] = {
             isPremium: true,
             startTime: new Date().toLocaleString(),
             endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
-            transaction: data.tran_id
+            transaction: transaction.paymentID
         }
 
         teacher.save().then(data => {
-            console.log(data)
-            res.send({ message: `Transaction status: ${data.status}. batch premium service activated till ${new Date(data.batch.endTime).toLocaleString()}`, error: false, data: data });
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
         }).catch(err => {
-            console.log(err)
-            res.send({ message: 'Something went wrong while activating batch premium service. Please contact with QOC management', error: true, data: err.message });
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.send({ message: 'Transaction status: ' + data.status, error: true })
+        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
         
     }
 

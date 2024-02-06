@@ -9,6 +9,7 @@ const { createAssignmentPayment } = require('../Controllers/AssignmentController
 const { ipn } = require('../Controllers/AssignmentController/ipn')
 const { checkAssignmentPremium } = require('../Controllers/AssignmentController/checkAssignmentPremium')
 const { submitSolution } = require('../Controllers/AssignmentController/submitSolution')
+const { bkashGrantToken } = require('../Middlewares/bkashGrantToken')
 
 
 
@@ -16,8 +17,8 @@ const { submitSolution } = require('../Controllers/AssignmentController/submitSo
 router.post('/', roleCheck('student'), premiumCheck('assignment'), createAssignment)
 router.post('/get', getAllAssignment)
 router.put('/:assignmentId', roleCheck('admin'), submitSolution)
-router.post('/payment', createAssignmentPayment)
-router.post('/payment/ipn', ipn)
+router.post('/payment', roleCheck('student'), bkashGrantToken(), createAssignmentPayment)
+router.get('/payment/ipn', ipn)
 router.get('/check-premium', roleCheck('student'), premiumCheck('assignment'), checkAssignmentPremium)
 
 

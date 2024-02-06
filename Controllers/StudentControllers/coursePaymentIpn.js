@@ -1,50 +1,52 @@
 
+const { default: axios } = require("axios")
 const { StudentModel } = require("../../Models/StudentModel")
 const { TransactionModel } = require("../../Models/TransactionModel")
 
 
 const coursePaymentIpn = async (req, res) => {
 
-    let data = req.body
+    let transaction = await TransactionModel.findOne({ paymentID: req.query.paymentID })
 
-    let student = await StudentModel.findOne({ _id: data.value_a })
+    axios.post(process.env.bkash_executePaymentApi, { paymentID: req.query.paymentID }, {
+        headers: {
+            "Accept": "application/json",
+            "Authorization": transaction.id_token,
+            'X-App-Key': process.env.bkash_app_key
+        }
+    }).then(data => {
 
-    await TransactionModel.create({
-        userInfo: {
-            userId: student._id,
-            username: student.username,
-            mobile: student.mobile,
-            email: student.email,
-            role: student.role,
-        },
-        status: data.status,
-        transId: data.tran_id,
-        tranDate: data.tran_date,
-        amount: data.currency_amount,
-        title: 'Premium Course'
+        transaction['status'] = req.query.status
+        transaction['tranDate'] = data.data.agreementExecuteTime
+
+        transaction.save()
     })
 
-    if (data.status === 'VALID') {
+    let student = await StudentModel.findOne({ _id: transaction.userInfo.userId })
+
+
+
+    if (req.query.status === 'success') {
 
         student['course'] = {
             isPremium: true,
             startTime: new Date().toLocaleString(),
             endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
-            transaction: data.tran_id
+            transaction: req.query.paymentID
         }
 
         student.save().then(data => {
-            console.log('Data: ', data)
-            
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+
         }).catch(err => {
-            console.log('Err: ', err)
+            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.send({ message: 'Transaction status: ' + data.status, error: true })
+        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
 
     }
 

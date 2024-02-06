@@ -8,6 +8,7 @@ const { setAssignmentPremium } = require('../Controllers/StudentControllers/setA
 const { setCoursePremium } = require('../Controllers/StudentControllers/setCoursePremium')
 const { updateStudent } = require('../Controllers/StudentControllers/updateStudent')
 const { roleCheck } = require('../Middlewares/roleCheck')
+const { bkashGrantToken } = require('../Middlewares/bkashGrantToken')
 
 const router = require('express').Router()
 
@@ -19,8 +20,8 @@ router.put('/:studentId', updateStudent)
 router.put('/set-assignment-premium/:studentId', roleCheck('admin'), setAssignmentPremium)
 router.put('/set-course-premium/:studentId', roleCheck('admin'), setCoursePremium)
 
-router.post('/course/payment', roleCheck('student'), createCoursePayment)
-router.post('/course/payment/ipn', coursePaymentIpn)
+router.post('/course/payment', roleCheck('student'),bkashGrantToken(), createCoursePayment)
+router.get('/course/payment/ipn', coursePaymentIpn)
 router.get('/activity/:studentId', roleCheck('student'), getAllActivity)
 
 module.exports = router
