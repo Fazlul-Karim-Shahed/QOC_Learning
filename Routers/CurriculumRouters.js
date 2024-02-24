@@ -3,6 +3,7 @@ const { createCurriculum } = require('../Controllers/CurriculumController/create
 const { getACurriculum } = require('../Controllers/CurriculumController/getACurriculum')
 const { getAllCurriculum } = require('../Controllers/CurriculumController/getAllCurriculum')
 const { removeCurriculumOutlines } = require('../Controllers/CurriculumController/removeOutline')
+const { deleteCurriculum } = require('../Controllers/CurriculumController/deleteCurriculum')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 
@@ -14,5 +15,6 @@ router.put('/remove-outline/:curriculumId/:position', roleCheck('admin'), remove
 router.put('/add-outline/:curriculumId', roleCheck('admin'), addCurriculumOutlines)
 router.get('/:curriculumId', getACurriculum)
 
+router.delete('/:curriculumId', roleCheck('admin'), deleteCurriculum )
 
 module.exports = router

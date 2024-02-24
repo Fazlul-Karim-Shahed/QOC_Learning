@@ -6,6 +6,8 @@ const { TransactionModel } = require("../../Models/TransactionModel")
 
 const coursePaymentIpn = async (req, res) => {
 
+    console.log(req.query.status)
+
     let transaction = await TransactionModel.findOne({ paymentID: req.query.paymentID })
 
     axios.post(process.env.bkash_executePaymentApi, { paymentID: req.query.paymentID }, {
@@ -36,17 +38,17 @@ const coursePaymentIpn = async (req, res) => {
         }
 
         student.save().then(data => {
-            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
 
         }).catch(err => {
-            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+        res.redirect(`http://localhost:3000/${req.query.status}`)
 
     }
 

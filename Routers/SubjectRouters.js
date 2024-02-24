@@ -6,12 +6,14 @@ const { getASubject } = require('../Controllers/SubjectController/getASubject')
 const { getSubjects } = require('../Controllers/SubjectController/getSubjects')
 const { removeSubjectMaterials } = require('../Controllers/SubjectController/removeSubjectMaterials')
 const { removeSubjectOutlines } = require('../Controllers/SubjectController/removeSubjectOutline')
+const { deleteSubject } = require('../Controllers/SubjectController/deleteSubject')
 const { roleCheck } = require('../Middlewares/roleCheck')
 
 const router = require('express').Router()
 
 router.post('/', roleCheck('admin'), createSubject)
 router.get('/:curriculumId', getSubjects)
+router.delete('/:subjectId', roleCheck('admin'), deleteSubject )
 
 router.get('/get-subject/:subjectId', getASubject)
 

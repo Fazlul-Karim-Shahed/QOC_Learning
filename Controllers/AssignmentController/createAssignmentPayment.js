@@ -13,7 +13,7 @@ const createAssignmentPayment = async (req, res) => {
     axios.post(process.env.bkash_createPaymentApi, {
         mode: '0000',
         payerReference: student._id,
-        callbackURL: 'https://qoc.api.koncept-tech.com/api/assignment/payment/ipn',
+        callbackURL: 'http://localhost:12287/api/assignment/payment/ipn',
         amount: '500',
         currency: 'BDT',
         intent: 'sale'

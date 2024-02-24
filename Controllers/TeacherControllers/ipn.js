@@ -41,16 +41,16 @@ const ipn = async (req, res) => {
         }
 
         teacher.save().then(data => {
-            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
         }).catch(err => {
-            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+        res.redirect(`http://localhost:3000/${req.query.status}`)
         
     }
 

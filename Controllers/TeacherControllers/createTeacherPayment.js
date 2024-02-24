@@ -13,7 +13,7 @@ const createTeacherPayment = async (req, res) => {
     axios.post(process.env.bkash_createPaymentApi, {
         mode: '0000',
         payerReference: teacher._id,
-        callbackURL: 'https://qoc.api.koncept-tech.com/api/teacher/payment/ipn',
+        callbackURL: 'http://localhost:12287/api/teacher/payment/ipn',
         amount: '5000',
         currency: 'BDT',
         intent: 'sale'

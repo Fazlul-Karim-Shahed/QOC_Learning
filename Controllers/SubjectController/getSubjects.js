@@ -11,6 +11,7 @@ const getSubjects = async (req, res) => {
     const data = await jwt.verify(req.headers.authorization, process.env.SECRET_KEY)
 
     if (data) {
+        
         const user = await checkEmail(data.email)
 
         if (user) {

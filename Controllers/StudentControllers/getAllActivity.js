@@ -31,7 +31,6 @@ const getAllActivity = async (req, res) => {
         }
     })
 
-
 }
 
 module.exports.getAllActivity = getAllActivity

@@ -19,9 +19,7 @@ const ipn = async (req, res) => {
         transaction['status'] = req.query.status
         transaction['tranDate'] = data.data.agreementExecuteTime
 
-        transaction.save().then(data => {
-            console.log('Transaction saved successfully')
-        })
+        transaction.save()
 
     })
 
@@ -39,18 +37,17 @@ const ipn = async (req, res) => {
 
         student.save().then(data => {
 
-            res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
 
         }).catch(err => {
-            console.log('Ass err: ', err)
-
+            res.redirect(`http://localhost:3000/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.redirect(`https://qoc.koncept-tech.com/${req.query.status}`)
+        res.redirect(`http://localhost:3000/${req.query.status}`)
     }
 
 
