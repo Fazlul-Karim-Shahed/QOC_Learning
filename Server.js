@@ -23,6 +23,7 @@ const FocusRouters = require("./Routers/FocusRouters");
 const ResourceRouters = require("./Routers/ResourceRouters");
 const TransactionRouters = require("./Routers/TransactionRouters");
 const UpcomingCourseRouters = require("./Routers/UpcomingCourseRouters");
+const DemoClassRouters = require("./Routers/DemoClassRouters");
 
 // ------------ Configuration ------------  //
 
@@ -81,6 +82,7 @@ app.use("/api/focus", FocusRouters);
 app.use("/api/resource", ResourceRouters);
 app.use("/api/transaction", TransactionRouters);
 app.use("/api/upcoming-course", UpcomingCourseRouters);
+app.use("/api/demo-class", DemoClassRouters);
 
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))

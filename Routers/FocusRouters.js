@@ -5,10 +5,11 @@ const { createFocus } = require("../Controllers/FocusController/createFocus");
 const { deleteFocus } = require("../Controllers/FocusController/deleteFocus");
 const { getFocus } = require("../Controllers/FocusController/getFocus");
 const { updateFocus } = require("../Controllers/FocusController/updateFocus");
+const {roleCheck} = require('../Middlewares/roleCheck')
 
-router.post("/", createFocus);
+router.post("/", roleCheck('admin'), createFocus);
 router.post("/get", getFocus);
-router.put("/:focusId", updateFocus);
-router.delete("/:focusId", deleteFocus);
+router.put("/:focusId", roleCheck('admin'), updateFocus);
+router.delete("/:focusId", roleCheck('admin'), deleteFocus);
 
 module.exports = router;

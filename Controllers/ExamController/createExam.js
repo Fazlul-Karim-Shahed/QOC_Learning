@@ -88,7 +88,7 @@ const createExam = async (req, res) => {
         participants: [],
     })
 
-    // console.log(exam)
+    console.log(exam)
 
     exam.save().then(data => {
         return res.send({ message: 'Exam created successfully', error: false, data: data });
