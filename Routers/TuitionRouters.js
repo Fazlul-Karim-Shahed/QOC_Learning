@@ -6,7 +6,7 @@ const { applyTuition } = require('../Controllers/TuitionControllers/applyTuition
 const { roleCheck } = require('../Middlewares/roleCheck')
 const { getAllTuition } = require('../Controllers/TuitionControllers/getAllTuition')
 const { getApprovedTuition } = require('../Controllers/TuitionControllers/getApprovedTeacher')
-
+const { updateTuition } = require('../Controllers/TuitionControllers/updateTuition')
 
 
 const router = require('express').Router()
@@ -21,6 +21,6 @@ router.post('/create', roleCheck('student'), createTuition)
 
 router.put('/apply/:tuitionId', roleCheck('teacher'), applyTuition)
 router.get('/approved', getApprovedTuition)
-
+router.put('/update/:tuitionId', roleCheck('admin'), updateTuition)
 
 module.exports = router

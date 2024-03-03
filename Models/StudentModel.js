@@ -4,7 +4,12 @@ const StudentModel = model('Student', new Schema({
 
     username: { type: String, required: true },
     email: { type: String, required: true },
-    mobile: { type: String, required: true },
+    mobile: {
+        type: String,
+        required: true,
+        minlength: [11, 'Minimum length should be 11'],
+        maxlength: [13, 'Maximum length should be 13']
+    },
     password: {
         type: String,
         max: 1024,

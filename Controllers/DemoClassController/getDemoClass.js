@@ -7,7 +7,7 @@ const { checkEmail } = require('../checkEmail')
 const getDemoClass = async (req, res) => {
 
 
-    let demoClass = await DemoClassModel.find({})
+    let demoClass = await DemoClassModel.find({}).sort({ classTime: 1 })
 
     if (demoClass.length != 0) {
 
@@ -17,7 +17,7 @@ const getDemoClass = async (req, res) => {
         res.send({ message: 'No demoClass found', error: true })
     }
 
-    
+
 
 }
 

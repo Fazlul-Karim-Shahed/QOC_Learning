@@ -24,6 +24,7 @@ const ResourceRouters = require("./Routers/ResourceRouters");
 const TransactionRouters = require("./Routers/TransactionRouters");
 const UpcomingCourseRouters = require("./Routers/UpcomingCourseRouters");
 const DemoClassRouters = require("./Routers/DemoClassRouters");
+const NoticeRouters = require("./Routers/NoticeRouters");
 
 // ------------ Configuration ------------  //
 
@@ -83,6 +84,7 @@ app.use("/api/resource", ResourceRouters);
 app.use("/api/transaction", TransactionRouters);
 app.use("/api/upcoming-course", UpcomingCourseRouters);
 app.use("/api/demo-class", DemoClassRouters);
+app.use("/api/notice", NoticeRouters);
 
 
 app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))

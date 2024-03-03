@@ -4,12 +4,17 @@ const TeacherModel = model('Teacher', new Schema({
 
     username: { type: String, required: true },
     email: { type: String, required: true },
-    mobile: { type: String, required: true },
+    mobile: {
+        type: String,
+        required: true,
+        minlength: [11, 'Minimum length should be 11'],
+        maxlength: [13, 'Maximum length should be 13']
+    },
     password: {
         type: String,
-        max: 1024,
-        min: 6,
         required: true,
+        minlength: [6, 'Minimum length should be 6'],
+        maxlength: [1024, 'Maximum length should be 1024']
 
     },
     role: {
