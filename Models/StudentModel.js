@@ -30,6 +30,7 @@ const StudentModel = model('Student', new Schema({
         startTime: { type: Date, default: new Date().toLocaleString(), required: true },
         endTime: { type: Date, default: new Date().toLocaleString(), required: true },
         transaction: { type: String },
+        count: {type: Number, default: 0, required: true}
     },
 
     course: {
