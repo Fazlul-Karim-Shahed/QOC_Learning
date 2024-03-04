@@ -17,7 +17,7 @@ const createJoiningBatchPayment = async (req, res) => {
     axios.post(process.env.bkash_createPaymentApi, {
         mode: '0000',
         payerReference: batch._id,
-        callbackURL: 'http://localhost:12287/api/batch/join/payment/ipn',
+        callbackURL: 'https://api.qoclearning.com/api/batch/join/payment/ipn',
         amount: String(batch.fees),
         currency: 'BDT',
         intent: 'sale'

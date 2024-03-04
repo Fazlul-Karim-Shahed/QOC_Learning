@@ -38,17 +38,17 @@ const coursePaymentIpn = async (req, res) => {
         }
 
         student.save().then(data => {
-            res.redirect(`https://qoclearning.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
 
         }).catch(err => {
-            res.redirect(`https://qoclearning.com/${req.query.status}`)
+            res.redirect(`http://localhost:3000/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.redirect(`https://qoclearning.com/${req.query.status}`)
+        res.redirect(`http://localhost:3000/${req.query.status}`)
 
     }
 
