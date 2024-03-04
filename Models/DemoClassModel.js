@@ -9,7 +9,7 @@ const DemoClassModel = model('DemoClass', new Schema({
 
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
-    classTime: {type: Date, required: true},
+    classTime: { type: Date, required: true },
     title: { type: String, required: true },
     description: { type: String },
     classLink: { type: String, required: true }
