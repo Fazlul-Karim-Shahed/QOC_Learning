@@ -26,7 +26,7 @@ const createCoursePayment = async (req, res) => {
         }
     }).then(data => {
 
-        
+
 
         if (data.data.statusMessage === "Successful") {
 
@@ -51,7 +51,7 @@ const createCoursePayment = async (req, res) => {
 
             }).catch(err => {
 
-    
+
                 res.send({ message: 'Something went wrong while creating transaction model', error: true, data: err });
 
             })

@@ -28,7 +28,7 @@ const ipn = async (req, res) => {
 
     let teacher = await TeacherModel.findOne({ _id: new mongoose.Types.ObjectId(transaction.userInfo.userId) })
 
-   
+
 
 
     if (req.query.status === 'success') {
@@ -41,17 +41,17 @@ const ipn = async (req, res) => {
         }
 
         teacher.save().then(data => {
-            res.redirect(`http://localhost:3000/${req.query.status}`)
+            res.redirect(`https://qoclearning.com/${req.query.status}`)
         }).catch(err => {
-            res.redirect(`http://localhost:3000/${req.query.status}`)
+            res.redirect(`https://qoclearning.com/${req.query.status}`)
         })
 
 
     }
     else {
 
-        res.redirect(`http://localhost:3000/${req.query.status}`)
-        
+        res.redirect(`https://qoclearning.com/${req.query.status}`)
+
     }
 
 
