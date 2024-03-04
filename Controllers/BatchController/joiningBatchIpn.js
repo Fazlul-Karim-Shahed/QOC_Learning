@@ -43,16 +43,16 @@ const joiningBatchIpn = async (req, res) => {
             }
         }).then(data => {
 
-            res.redirect(`http://localhost:3000/${req.query.status}`)
+            res.redirect(`https://qoclearning.com/${req.query.status}`)
 
         }).catch(err => {
-            res.redirect(`http://localhost:3000/${req.query.status}`)
+            res.redirect(`https://qoclearning.com/${req.query.status}`)
         })
 
 
     }
     else {
-        res.redirect(`http://localhost:3000/${req.query.status}`)
+        res.redirect(`https://qoclearning.com/${req.query.status}`)
     }
 
 
