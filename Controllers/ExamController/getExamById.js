@@ -2,27 +2,49 @@
 
 const { ExamModel } = require('../../Models/ExamModel')
 const { StudentModel } = require('../../Models/StudentModel')
+const { checkEmail } = require('../checkEmail')
 const { cleanObject } = require('../cleanObject')
 
 const getExamById = async (req, res) => {
 
 
-    let student = await StudentModel.findOne({_id: req.params.studentId})
+    if (req.user.toObject().hasOwnProperty('course') && req.user.course.isPremium) {
 
-    if (student && student.toObject().hasOwnProperty('curriculumId')){ 
+        ExamModel.find({}).populate(['subjectId', 'curriculumId', 'subjectId', 'moduleId', 'broadQuestionsId', 'mcqsId'])
+            .sort({ startTime: -1 }).then(data => {
+                res.status(200).send({ message: 'All exam', error: false, data: data })
+            }).catch(err => {
+                res.send({ message: 'No exam found', error: true, data: err.message })
+            })
 
-        let exam = await ExamModel.find({ curriculumId: student['curriculumId'] }).populate(['curriculumId', 'subjectId', 'chapterId', 'moduleId', 'mcqsId', 'broadQuestionsId']).sort({ startTime: -1 })
-
-        if (exam.length != 0) {
-            res.status(200).send({ message: 'All exam', error: false, data: exam })
-        }
-        else {
-            res.send({ message: 'No exam found', error: true })
-        }
     }
-    else{
-        res.send({ message: 'Curriculum not updated. Please update your profile', error: true})
+    else {
+
+        ExamModel.find({}).populate(['subjectId', 'curriculumId', 'subjectId', 'moduleId', 'broadQuestionsId', 'mcqsId']).then(data => {
+
+            let freeExam = []
+            for (let i = 0; i < data.length; i++) {
+
+                if ((data[i].moduleId && data[i].moduleId.paid) || (data[i].chapterId && data[i].chapterId.paid) || (data[i].subjectId && data[i].subjectId.paid)) {
+
+                    continue
+                }
+                else {
+                    freeExam.push(data[i])
+                }
+
+
+            }
+
+            res.status(200).send({ message: 'All Exam', error: false, data: freeExam })
+        }).catch(err => {
+            res.send({ message: 'No Exam found', error: true, data: err.message })
+        })
+
+
+
     }
+
 
 }
 

@@ -7,8 +7,6 @@ const { generateRandValue } = require("../generateRandValue");
 
 const createExam = async (req, res) => {
 
-    console.log(req.body)
-
     let query = {
         curriculumId: req.body.curriculumId,
         subjectId: req.body.subjectId
@@ -87,8 +85,6 @@ const createExam = async (req, res) => {
         totalMarks: req.body.totalMarks,
         participants: [],
     })
-
-    console.log(exam)
 
     exam.save().then(data => {
         return res.send({ message: 'Exam created successfully', error: false, data: data });

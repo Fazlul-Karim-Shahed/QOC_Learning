@@ -11,11 +11,15 @@ const createSubject = async (req, res) => {
 
     form.parse(req, (err, fields, files) => {
 
+        // console.log(files)
+
         if (err) {
 
             res.send({ message: 'Subject upload failed', error: true })
         }
         else {
+
+            console.log(fields)
 
             let subjectObj = {}
 
@@ -31,8 +35,8 @@ const createSubject = async (req, res) => {
 
             if (files && Object.keys(files).length !== 0) {
 
-                console.log('outlines', files['outlines[]'])
-                console.log('Materials', files['materials[]'])
+                // console.log('outlines', files['outlines[]'])
+                // console.log('Materials', files['materials[]'])
 
                 let arr = []
 
@@ -84,7 +88,7 @@ const createSubject = async (req, res) => {
                         arr.push(p)
                     }
                 }
-                
+
 
                 Promise.all(arr).then(arr => {
 
@@ -129,7 +133,7 @@ const createSubject = async (req, res) => {
                 subject.save().then(data => {
 
                     res.send({ message: 'Subject created successfully', error: false, value: data });
-                    
+
                 }).catch(err => {
                     res.send({ message: 'Subject upload failed', error: true , data: err.message})
                 })

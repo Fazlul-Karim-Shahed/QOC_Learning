@@ -6,6 +6,7 @@ const { getConfirmedTuition } = require('../Controllers/TeacherControllers/getCo
 const { getTeacher } = require('../Controllers/TeacherControllers/getTeacher')
 const { setPremium } = require('../Controllers/TeacherControllers/setPremium')
 const { updateTeacherInfo } = require('../Controllers/TeacherControllers/updateTeacherInfo')
+const { deleteTeacher } = require('../Controllers/TeacherControllers/deleteTeacher')
 const { roleCheck } = require('../Middlewares/roleCheck')
 const { bkashGrantToken } = require('../Middlewares/bkashGrantToken')
 const { premiumCheck } = require('../Middlewares/premiumCheck')
@@ -17,6 +18,7 @@ const router = require('express').Router()
 
 router.get('/confirmed-tuition/:teacherId', roleCheck('teacher'), getConfirmedTuition)
 router.post('/get', getTeacher)
+router.delete('/:teacherId', roleCheck('admin'), deleteTeacher)
 router.put('/set-premium/:teacherId', roleCheck('admin'), setPremium)
 router.put('/:teacherId', roleCheck('teacher'), updateTeacherInfo)
 

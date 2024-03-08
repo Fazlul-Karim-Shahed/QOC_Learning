@@ -11,6 +11,7 @@ const setAssignmentPremium = async (req, res) => {
             isPremium: true,
             startTime: new Date().toLocaleString(),
             endTime: new Date(new Date().getTime() + 15 * 24 * 60 * 60 * 1000).toLocaleString(),
+            count: 0
         }
 
         student.save().then(data => {

@@ -13,12 +13,14 @@ const { bkashGrantToken } = require('../Middlewares/bkashGrantToken')
 const { getEnrolledBatch } = require('../Controllers/BatchController/getEnrolledBatch')
 const { createAnnouncement } = require('../Controllers/BatchController/createAnnouncement')
 const { getBatchDashboard } = require('../Controllers/BatchController/getBatchDashboard')
+const { deleteBatch } = require('../Controllers/BatchController/deleteBatch')
 
 
 const router = require('express').Router()
 
 router.post('/', roleCheck('teacher'), premiumCheck('batch'), createBatch)
 router.post('/get', getAllBatch)
+router.delete('/:batchId', roleCheck('admin'), deleteBatch)
 router.get('/enroll/:studentId', getEnrolledBatch)
 router.put('/enroll/:batchId', roleCheck('student'), enrollBatch)
 router.post('/join/payment', roleCheck('student'), bkashGrantToken(), createJoiningBatchPayment)
