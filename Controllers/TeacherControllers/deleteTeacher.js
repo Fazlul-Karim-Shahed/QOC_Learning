@@ -1,18 +1,19 @@
 
 
 const { TeacherModel } = require('../../Models/TeacherModel')
+const { TuitionModel } = require('../../Models/TuitionModel')
+const { TransactionModel } = require('../../Models/TransactionModel')
 
 const deleteTeacher = async (req, res) => {
 
-    let teacher = await TeacherModel.deleteOne({ _id: req.params.teacherId })
+    let transaction = await TransactionModel.deleteOne({ "userInfo.userId": req.params.teacherId })
+    let tuition = await TuitionModel.deleteOne({ confirmedTeacherId: req.params.teacherId })
 
-    if (Teacher) {
-
-        res.status(200).send({ message: 'Teacher Deleted', error: false, data: teacher })
-    }
-    else {
-        res.send({ message: 'Not delete', error: true })
-    }
+    TeacherModel.deleteOne({ _id: req.params.teacherId }).then(data => {
+         res.status(200).send({ message: 'Teacher Deleted', error: false, data: data })
+    }).catch(err => {
+        res.send({ message: err.message, error: true })
+    })
 
 }
 

@@ -25,7 +25,6 @@ const deleteCurriculum = async (req, res) => {
     let subject = await SubjectModel.deleteMany({ curriculumId: req.params.curriculumId })
     let focus = await FocusModel.deleteMany({ curriculumId: req.params.curriculumId })
     let students = await StudentModel.deleteMany({ curriculumId: req.params.curriculumId })
-    let teacher = await TeacherModel.deleteMany({ curriculumId: req.params.curriculumId })
     let notice = await NoticeModel.deleteMany({ curriculumId: req.params.curriculumId })
     let demoClass = await DemoClassModel.deleteMany({ curriculumId: req.params.curriculumId })
     let upcoming = await UpcomingCourseModel.deleteMany({ curriculumId: req.params.curriculumId })
