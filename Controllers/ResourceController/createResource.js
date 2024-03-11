@@ -15,6 +15,7 @@ const createResource = async (req, res) => {
     form.parse(req, (err, fields, files) => {
 
         if (err) {
+            console.log(err)
             res.send({ message: 'Resource upload failed', error: true, data: err.message })
         }
 

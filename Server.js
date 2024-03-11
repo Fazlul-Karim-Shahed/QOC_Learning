@@ -33,8 +33,8 @@ const NoticeRouters = require("./Routers/NoticeRouters");
 dotenv.config();
 const app = express();
 // app.use(express.bodyParser({exte}));
-app.use(express.json({ limit: "5000mb" }));
-app.use(express.urlencoded({ limit: "5000mb" }))
+app.use(express.json({ limit: "500mb" }));
+app.use(express.urlencoded({ limit: "500mb", extended: true }))
 app.options("*", cors({ origin: '*', optionsSuccessStatus: 200 }))
 app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
 app.use(compression());
