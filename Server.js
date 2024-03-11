@@ -1,5 +1,6 @@
 require("express-async-errors");
 const express = require("express");
+
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -31,9 +32,10 @@ const NoticeRouters = require("./Routers/NoticeRouters");
 
 dotenv.config();
 const app = express();
-app.use(express.json({ limit: "50mb" }));
+// app.use(express.bodyParser({exte}));
+app.use(express.json({ limit: "5000mb" }));
+app.use(express.urlencoded({ limit: "5000mb" }))
 app.options("*", cors({ origin: '*', optionsSuccessStatus: 200 }))
-app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
 app.use(compression());
 
@@ -92,8 +94,11 @@ app.get('/', (req, res) => res.sendFile(path.resolve('./Server.html')))
 
 // Express async error handlers
 app.use((err, req, res, next) => {
-  console.log(err)
-  if (err) return res.send({ message: err, error: true });
+  if (err) {
+    return res.send({ message: "Something went wrong", error: true, data: err.message });
+  }
+
+  next(err);
 });
 
 // ------------ Server ------------ //

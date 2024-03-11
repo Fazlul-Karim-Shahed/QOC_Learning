@@ -2,13 +2,13 @@
 const fs = require('fs')
 const { ResourceModel } = require('../../Models/ResourceModel')
 const _ = require('lodash')
-const { IncomingForm } = require('formidable')
+const { IncomingForm, formidable } = require('formidable')
 const { cleanObject } = require('../cleanObject')
 
 
 const updateResource = async (req, res) => {
 
-    let form = new IncomingForm()
+    let form = formidable({ maxFileSize: 5000 * 1024 * 1024 })
     form.keepExtensions = true
 
     let updatedResource = await ResourceModel.findOne({ _id: req.params.resourceId })
@@ -16,8 +16,7 @@ const updateResource = async (req, res) => {
     form.parse(req, (err, fields, files) => {
 
         if (err) {
-
-            res.send({ message: 'Resource update failed', error: true })
+            res.send({ message: 'Resource update failed', error: true, data: err.message })
         }
 
         else {

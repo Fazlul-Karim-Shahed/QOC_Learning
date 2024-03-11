@@ -2,20 +2,20 @@
 const fs = require('fs')
 const { ResourceModel } = require('../../Models/ResourceModel')
 const _ = require('lodash')
-const { IncomingForm } = require('formidable')
+const { IncomingForm, formidable } = require('formidable')
 const { cleanObject } = require('../cleanObject')
 
 
 const createResource = async (req, res) => {
 
-    let form = new IncomingForm()
+    let form = formidable({maxFileSize: 500 * 1024 * 1024})
     form.keepExtensions = true
+
 
     form.parse(req, (err, fields, files) => {
 
         if (err) {
-
-            res.send({ message: 'Resource upload failed', error: true })
+            res.send({ message: 'Resource upload failed', error: true, data: err.message })
         }
 
         else {
@@ -37,6 +37,11 @@ const createResource = async (req, res) => {
                     let x = new Promise(resolve => {
 
                         fs.readFile(files['attachment'][0].filepath, (err, data) => {
+
+                            if (err) {
+                                console.log(err)
+                                res.send({ message: 'Resource upload failed', error: true, data: err.message })
+                            }
 
                             resolve({
                                 data: data,

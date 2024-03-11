@@ -9,7 +9,9 @@ const BroadQuestionModel = model('BroadQuestion', new Schema({
     moduleId: { type: Schema.Types.ObjectId, ref: "Module" },
 
     question: { type: String, required: true },
+    questionAttachment: { data: Buffer, contentType: String, type: Object, name: String },
     answer: { type: String },
+    answerAttachment: { data: Buffer, contentType: String, type: Object, name: String },
     difficulty: { type: String, required: true, default: 'easy', enum: ['easy', 'medium', 'hard'] },
 
 }, { timestamps: true }))
