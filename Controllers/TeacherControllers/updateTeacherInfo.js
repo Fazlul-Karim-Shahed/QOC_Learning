@@ -31,34 +31,39 @@ const updateTeacherInfo = async (req, res) => {
 
             if (files && Object.keys(files).length > 0) {
 
-                let x = new Promise(resolve => {
+                if (files['image'][0].size > 1024 * 500) { // 700 kb
+                    return res.send({ message: 'Pictute size must me less than 500 kb', error: true })
+                }
+                else {
+                    let x = new Promise(resolve => {
 
-                    fs.readFile(files['image'][0].filepath, (err, data) => {
+                        fs.readFile(files['image'][0].filepath, (err, data) => {
 
-                        resolve({
-                            data: data,
-                            contentType: files['image'][0].mimetype,
-                            name: files['image'][0].originalFilename,
+                            resolve({
+                                data: data,
+                                contentType: files['image'][0].mimetype,
+                                name: files['image'][0].originalFilename,
+                            })
+
+                        })
+                    })
+
+
+                    x.then(data => {
+
+                        teacherInfoObj['image'] = data
+
+                        TeacherModel.updateOne({ _id: req.params.teacherId }, teacherInfoObj).then(data => {
+
+                            return res.send({ message: 'Teacher updated successfully', error: false, data: data })
+
+                        }).catch(err => {
+
+                            return res.send({ message: 'Teacher update failed', error: true, data: err.message })
                         })
 
                     })
-                })
-
-
-                x.then(data => {
-
-                    teacherInfoObj['image'] = data
-
-                    TeacherModel.updateOne({ _id: req.params.teacherId }, teacherInfoObj).then(data => {
-
-                        return res.send({ message: 'Teacher updated successfully', error: false, data: data })
-
-                    }).catch(err => {
-
-                        return res.send({ message: 'Teacher update failed', error: true, data: err.message })
-                    })
-
-                })
+                }
 
 
 
