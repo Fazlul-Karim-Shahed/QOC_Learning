@@ -4,6 +4,7 @@ const { ResourceModel } = require('../../Models/ResourceModel')
 const _ = require('lodash')
 const { IncomingForm, formidable } = require('formidable')
 const { cleanObject } = require('../cleanObject')
+const path = require('path')
 
 
 const updateResource = async (req, res, next) => {
@@ -34,23 +35,29 @@ const updateResource = async (req, res, next) => {
 
                 if (files && Object.keys(files).length != 0) {
 
-                    if (files['attachment'][0].size > 15 * 1024 * 1024) { // 500 kb
-                        return res.send({ message: 'Size must me less than 15 mb', error: true })
-                    }
-
                     if (files['attachment'] && files['attachment'].length > 0) {
+
+                        fs.unlink(path.join(process.cwd(), "uploads", updatedResource['attachment'].name), () => {
+                            console.log('File deleted successfully');
+                        })
 
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files['attachment'][0].filepath, (err, data) => {
+                            const prefix = new Date().getTime() * Math.random()
+                            const tempPath = files['attachment'][0].filepath;
+                            const destinationPath = path.join(process.cwd(), "uploads", prefix + files['attachment'][0].originalFilename);
 
+                            fs.copyFile(tempPath, destinationPath, (err) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                                }
                                 resolve({
-                                    data: data,
                                     contentType: files['attachment'][0].mimetype,
-                                    name: files['attachment'][0].originalFilename,
+                                    name: prefix + files['attachment'][0].originalFilename,
                                 })
 
-                            })
+                            });
                         })
 
 

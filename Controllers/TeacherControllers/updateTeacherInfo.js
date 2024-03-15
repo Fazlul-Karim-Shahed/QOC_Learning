@@ -5,6 +5,7 @@ const _ = require('lodash')
 const { IncomingForm } = require('formidable')
 const { formDataToObj } = require('../formDataToObj')
 const { cleanObject } = require('../cleanObject')
+const path = require('path')
 
 
 const updateTeacherInfo = async (req, res) => {
@@ -31,21 +32,27 @@ const updateTeacherInfo = async (req, res) => {
 
             if (files && Object.keys(files).length > 0) {
 
-                if (files['image'][0].size > 1024 * 500) { // 500 kb
-                    return res.send({ message: 'Pictute size must me less than 500 kb', error: true })
+                if (files['image'][0].size > 1024 * 1024) { // 1mb
+                    return res.send({ message: 'Pictute size must me less than 1 mb', error: true })
                 }
                 else {
                     let x = new Promise(resolve => {
 
-                        fs.readFile(files['image'][0].filepath, (err, data) => {
+                        const prefix = new Date().getTime() * Math.random()
+                        const tempPath = files['image'][0].filepath;
+                        const destinationPath = path.join(process.cwd(), "uploads", prefix + files['image'][0].originalFilename);
 
+                        fs.copyFile(tempPath, destinationPath, (err) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                            }
                             resolve({
-                                data: data,
                                 contentType: files['image'][0].mimetype,
-                                name: files['image'][0].originalFilename,
+                                name: prefix + files['image'][0].originalFilename,
                             })
 
-                        })
+                        });
                     })
 
 

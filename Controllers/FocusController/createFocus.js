@@ -4,6 +4,7 @@ const { FocusModel } = require('../../Models/FocusModel')
 const _ = require('lodash')
 const { IncomingForm } = require('formidable')
 const { cleanObject } = require('../cleanObject')
+const path = require('path')
 
 
 const createFocus = async (req, res) => {
@@ -34,21 +35,23 @@ const createFocus = async (req, res) => {
 
                 if (files['attachment'] && files['attachment'].length > 0) {
 
-                    if (files['attachment'][0].size > 15 * 1024 * 1024) { // 15 mb
-                        return res.send({ message: 'Size must me less than 15 mb', error: true })
-                    }
-
                     let x = new Promise(resolve => {
 
-                        fs.readFile(files['attachment'][0].filepath, (err, data) => {
+                        const prefix = new Date().getTime() * Math.random()
+                        const tempPath = files['attachment'][0].filepath;
+                        const destinationPath = path.join(process.cwd(), "uploads", prefix + files['attachment'][0].originalFilename);
 
+                        fs.copyFile(tempPath, destinationPath, (err) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                            }
                             resolve({
-                                data: data,
                                 contentType: files['attachment'][0].mimetype,
-                                name: files['attachment'][0].originalFilename,
+                                name: prefix + files['attachment'][0].originalFilename,
                             })
 
-                        })
+                        });
                     })
 
 

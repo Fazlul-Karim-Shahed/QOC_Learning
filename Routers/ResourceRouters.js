@@ -3,9 +3,7 @@ const { deleteResource } = require("../Controllers/ResourceController/deleteRour
 const { getResource } = require("../Controllers/ResourceController/getResource");
 const { updateResource } = require("../Controllers/ResourceController/updateResource");
 
-
 const router = require("express").Router();
-
 
 router.post("/", createResource);
 router.post("/get", getResource);

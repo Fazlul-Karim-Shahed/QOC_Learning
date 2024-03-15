@@ -2,6 +2,7 @@ const fs = require('fs')
 const { ChapterModel } = require('../../Models/ChapterModel')
 const _ = require('lodash')
 const { IncomingForm } = require('formidable')
+const path = require('path')
 
 
 const createChapter = async (req, res) => {
@@ -35,21 +36,23 @@ const createChapter = async (req, res) => {
 
                     for (let i in files['materials[]']) {
 
-                        if (files['materials[]'][i].size > 15 * 1024 * 1024) { // 15 mb
-                            return res.send({ message: 'Size must me less than 15 mb', error: true })
-                        }
-
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files['materials[]'][i].filepath, (err, data) => {
+                            const prefix = new Date().getTime() * Math.random()
+                            const tempPath = files['materials[]'][i].filepath;
+                            const destinationPath = path.join(process.cwd(), "uploads", prefix + files['materials[]'][i].originalFilename);
 
+                            fs.copyFile(tempPath, destinationPath, (err) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                                }
                                 resolve({
-                                    data: data,
                                     contentType: files['materials[]'][i].mimetype,
-                                    name: files['materials[]'][i].originalFilename,
+                                    name: prefix + files['materials[]'][i].originalFilename,
                                 })
 
-                            })
+                            });
                         })
 
                         arr.push(x)
@@ -82,8 +85,8 @@ const createChapter = async (req, res) => {
                     res.send({ message: 'chapter created successfully', error: false, value: data });
 
                 }).catch(err => {
-                        
-                        res.send({ message: 'Chapter creation failed', error: true, value: err.message });
+
+                    res.send({ message: 'Chapter creation failed', error: true, value: err.message });
                 })
 
             }

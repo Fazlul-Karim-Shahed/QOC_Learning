@@ -6,6 +6,7 @@ const { generateRandValue } = require("../generateRandValue");
 const { IncomingForm } = require("formidable")
 const fs = require('fs');
 const { formDataToObj } = require("../formDataToObj");
+const path = require("path");
 
 
 const createExam = async (req, res) => {
@@ -53,15 +54,21 @@ const createExam = async (req, res) => {
 
                     let x = new Promise(resolve => {
 
-                        fs.readFile(files['attachment'][0].filepath, (err, data) => {
+                        const prefix = new Date().getTime() * Math.random()
+                        const tempPath = files['attachment'][0].filepath;
+                        const destinationPath = path.join(process.cwd(), "uploads", prefix + files['attachment'][0].originalFilename);
 
+                        fs.copyFile(tempPath, destinationPath, (err) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                            }
                             resolve({
-                                data: data,
                                 contentType: files['attachment'][0].mimetype,
-                                name: files['attachment'][0].originalFilename,
+                                name: prefix + files['attachment'][0].originalFilename,
                             })
 
-                        })
+                        });
                     })
 
                     x.then(data => {

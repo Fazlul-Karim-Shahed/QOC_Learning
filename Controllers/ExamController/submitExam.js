@@ -5,6 +5,7 @@ const { ExamModel } = require('../../Models/ExamModel');
 const { formDataToObj } = require('../formDataToObj');
 const fs = require('fs');
 const { cleanObject } = require('../cleanObject');
+const path = require('path');
 
 const submitExam = async (req, res) => {
 
@@ -34,17 +35,22 @@ const submitExam = async (req, res) => {
 
                 if (files && Object.keys(files).length != 0) {
 
-                    if (files['script'][0].size > 15 * 1024 * 1024) { // 15 mb
-                        return res.send({ message: 'Size must me less than 15 mb', error: true })
-                    }
 
-                    fs.readFile(files['script'][0].filepath, (err, data) => {
+                    const prefix = new Date().getTime() * Math.random()
+                    const tempPath = files['script'][0].filepath;
+                    const destinationPath = path.join(process.cwd(), "uploads", prefix + files['script'][0].originalFilename);
+
+                    fs.copyFile(tempPath, destinationPath, (err) => {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                        }
 
                         participantsObj['script'] = {
-                            data: data,
                             contentType: files['script'][0].mimetype,
-                            name: files['script'][0].originalFilename,
+                            name: prefix + files['script'][0].originalFilename,
                         }
+
 
                         ExamModel.updateOne({ _id: req.params.examId }, { $push: { participants: participantsObj } }).then(data => {
 
@@ -57,7 +63,7 @@ const submitExam = async (req, res) => {
 
                         })
 
-                    })
+                    });
 
                 }
                 else {

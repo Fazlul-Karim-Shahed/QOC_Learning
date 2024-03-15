@@ -4,11 +4,13 @@ const { ResourceModel } = require('../../Models/ResourceModel')
 const _ = require('lodash')
 const { IncomingForm, formidable } = require('formidable')
 const { cleanObject } = require('../cleanObject')
+const path = require('path')
+
 
 
 const createResource = async (req, res) => {
 
-    let form = formidable({maxFileSize: 500 * 1024 * 1024})
+    let form = formidable({ maxFileSize: 500 * 1024 * 1024 })
     form.keepExtensions = true
 
 
@@ -35,26 +37,24 @@ const createResource = async (req, res) => {
 
                 if (files['attachment'] && files['attachment'].length > 0) {
 
-                    if (files['attachment'][0].size > 15 * 1024 * 1024) { // 15 mb
-                        return res.send({ message: 'Size must me less than 15 mb', error: true })
-                    }
-
                     let x = new Promise(resolve => {
 
-                        fs.readFile(files['attachment'][0].filepath, (err, data) => {
+                        const prefix = new Date().getTime() * Math.random()
+                        const tempPath = files['attachment'][0].filepath;
+                        const destinationPath = path.join(process.cwd(), "uploads", prefix + files['attachment'][0].originalFilename);
 
+                        fs.copyFile(tempPath, destinationPath, (err) => {
                             if (err) {
-                                console.log(err)
-                                res.send({ message: 'Resource upload failed', error: true, data: err.message })
+                                console.error(err);
+                                return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
                             }
-
                             resolve({
-                                data: data,
                                 contentType: files['attachment'][0].mimetype,
-                                name: files['attachment'][0].originalFilename,
+                                name: prefix + files['attachment'][0].originalFilename,
                             })
 
-                        })
+                        });
+
                     })
 
 

@@ -2,6 +2,7 @@ const fs = require('fs')
 const { CurriculumModel } = require('../../Models/CurriculumModel')
 const _ = require('lodash')
 const { IncomingForm } = require('formidable')
+const path = require('path')
 
 
 const addCurriculumOutlines = async (req, res) => {
@@ -28,21 +29,23 @@ const addCurriculumOutlines = async (req, res) => {
 
                     for (let i in files['outlines[]']) {
 
-                        if (files['outlines[]'][i].size > 15 * 1024 * 1024) { // 500 kb
-                            return res.send({ message: 'Size must me less than 15 mb', error: true })
-                        }
-
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files['outlines[]'][i].filepath, (err, data) => {
+                            const prefix = new Date().getTime() * Math.random()
+                            const tempPath = files['outlines[]'][i].filepath;
+                            const destinationPath = path.join(process.cwd(), "uploads", prefix + files['outlines[]'][i].originalFilename);
 
+                            fs.copyFile(tempPath, destinationPath, (err) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                                }
                                 resolve({
-                                    data: data,
                                     contentType: files['outlines[]'][i].mimetype,
-                                    name: files['outlines[]'][i].originalFilename,
+                                    name: prefix + files['outlines[]'][i].originalFilename,
                                 })
 
-                            })
+                            });
                         })
 
                         arr.push(x)

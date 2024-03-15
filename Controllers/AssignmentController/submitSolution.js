@@ -3,6 +3,7 @@ const fs = require('fs')
 const { AssignmentModel } = require('../../Models/AssignmentModel')
 const _ = require('lodash')
 const { IncomingForm } = require('formidable')
+const path = require('path')
 
 
 const submitSolution = async (req, res) => {
@@ -18,25 +19,25 @@ const submitSolution = async (req, res) => {
         }
         else {
 
-            // console.log(files)
-
             if (files && Object.keys(files).length > 0) {
-
-                if (files['answer'][0].size > 15 * 1024 * 1024) { // 15 mb
-                    return res.send({ message: 'Size must me less than 15 mb', error: true })
-                }
 
                 let x = new Promise(resolve => {
 
-                    fs.readFile(files['answer'][0].filepath, (err, data) => {
+                    const prefix = new Date().getTime() * Math.random()
+                    const tempPath = files['answer'][0].filepath;
+                    const destinationPath = path.join(process.cwd(), "uploads", prefix + files['answer'][0].originalFilename);
 
+                    fs.copyFile(tempPath, destinationPath, (err) => {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                        }
                         resolve({
-                            data: data,
                             contentType: files['answer'][0].mimetype,
-                            name: files['answer'][0].originalFilename,
+                            name: prefix + files['answer'][0].originalFilename,
                         })
 
-                    })
+                    });
                 })
 
 

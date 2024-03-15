@@ -2,6 +2,7 @@ const fs = require('fs')
 const { SubjectModel } = require('../../Models/SubjectModel')
 const _ = require('lodash')
 const { IncomingForm } = require('formidable')
+const path = require('path')
 
 
 const createSubject = async (req, res) => {
@@ -44,22 +45,24 @@ const createSubject = async (req, res) => {
 
                     for (let i in files['outlines[]']) {
 
-                        if (files['outlines[]'][i].size > 15 * 1024 * 1024) { // 15 mb
-                            return res.send({ message: 'Size must me less than 15 mb', error: true })
-                        }
-
                         let x = new Promise(resolve => {
 
-                            fs.readFile(files['outlines[]'][i].filepath, (err, data) => {
+                            const prefix = new Date().getTime() * Math.random()
+                            const tempPath = files['outlines[]'][i].filepath;
+                            const destinationPath = path.join(process.cwd(), "uploads", prefix + files['outlines[]'][i].originalFilename);
 
+                            fs.copyFile(tempPath, destinationPath, (err) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                                }
                                 resolve({
-                                    data: data,
                                     contentType: files['outlines[]'][i].mimetype,
-                                    name: files['outlines[]'][i].originalFilename,
+                                    name: prefix + files['outlines[]'][i].originalFilename,
                                     type: 'outlines'
                                 })
 
-                            })
+                            });
                         })
 
                         arr.push(x)
@@ -71,22 +74,24 @@ const createSubject = async (req, res) => {
 
                     for (let i in files['materials[]']) {
 
-                        if (files['materials[]'][i].size > 15 * 1024 * 1024) { // 15 mb
-                            return res.send({ message: 'Size must me less than 15 mb', error: true })
-                        }
-
                         let p = new Promise(resolve => {
 
-                            fs.readFile(files['materials[]'][i].filepath, (err, data) => {
+                            const prefix = new Date().getTime() * Math.random()
+                            const tempPath = files['materials[]'][i].filepath;
+                            const destinationPath = path.join(process.cwd(), "uploads", prefix + files['materials[]'][i].originalFilename);
 
+                            fs.copyFile(tempPath, destinationPath, (err) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({ error: 'Failed to move the file to destination folder.' });
+                                }
                                 resolve({
-                                    data: data,
                                     contentType: files['materials[]'][i].mimetype,
-                                    name: files['materials[]'][i].originalFilename,
+                                    name: prefix + files['materials[]'][i].originalFilename,
                                     type: 'materials'
                                 })
 
-                            })
+                            });
                         })
 
                         arr.push(p)
@@ -102,7 +107,7 @@ const createSubject = async (req, res) => {
                     subject['materials'] = materials.map(data => {
 
                         return {
-                            data: data.data,
+                            // data: data.data,
                             contentType: data.contentType,
                             name: data.name
                         }
@@ -111,7 +116,7 @@ const createSubject = async (req, res) => {
                     subject['outlines'] = outlines.map(data => {
 
                         return {
-                            data: data.data,
+                            // data: data.data,
                             contentType: data.contentType,
                             name: data.name
                         }
@@ -139,7 +144,7 @@ const createSubject = async (req, res) => {
                     res.send({ message: 'Subject created successfully', error: false, value: data });
 
                 }).catch(err => {
-                    res.send({ message: 'Subject upload failed', error: true , data: err.message})
+                    res.send({ message: 'Subject upload failed', error: true, data: err.message })
                 })
 
             }

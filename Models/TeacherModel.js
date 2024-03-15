@@ -24,7 +24,7 @@ const TeacherModel = model('Teacher', new Schema({
     },
     degree: { type: String },
     review: { type: Number, default: 0, required: true },
-    grading: { type: Number },
+    grading: { type: Number, default: 0, required: true },
     useQocExam: { type: Number, default: 0, required: true },
     checkQocExam: { type: Number, default: 0, required: true },
     contactAgree: { type: Boolean, default: false, required: true },
@@ -38,6 +38,7 @@ const TeacherModel = model('Teacher', new Schema({
     bio: { type: String },
     description: { type: String },
     image: { data: Buffer, contentType: String, type: Object },
+    featured: { type: Boolean, default: false, required: true },
     batch: {
         isPremium: { type: Boolean, required: true, default: false },
         startTime: { type: Date, default: new Date().toLocaleString(), required: true },
