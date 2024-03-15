@@ -3,7 +3,8 @@
 const { IncomingForm } = require('formidable')
 const { ExamModel } = require('../../Models/ExamModel');
 const { formDataToObj } = require('../formDataToObj');
-const fs = require('fs')
+const fs = require('fs');
+const { cleanObject } = require('../cleanObject');
 
 const submitExam = async (req, res) => {
 
@@ -28,10 +29,14 @@ const submitExam = async (req, res) => {
             }
             else {
 
-                let participantsObj = formDataToObj(fields)
+                let participantsObj = cleanObject(formDataToObj(fields))
 
 
                 if (files && Object.keys(files).length != 0) {
+
+                    if (files['script'][0].size > 15 * 1024 * 1024) { // 15 mb
+                        return res.send({ message: 'Size must me less than 15 mb', error: true })
+                    }
 
                     fs.readFile(files['script'][0].filepath, (err, data) => {
 
@@ -47,6 +52,7 @@ const submitExam = async (req, res) => {
 
                         }).catch(err => {
 
+                            console.log(err)
                             return res.send({ message: 'Exam submission failed', error: true, data: err.message })
 
                         })

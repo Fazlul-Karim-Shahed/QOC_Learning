@@ -14,10 +14,14 @@ const ExamModel = model('Exam', new Schema({
     broadQuestionsId: [{ type: Schema.Types.ObjectId, ref: "BroadQuestion" }],
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
-    negativeMarking: { type: Number, required: true },
-    perMcqMarks: { type: Number, required: true },
+    negativeMarking: { type: Number },
+    perMcqMarks: { type: Number, },
     totalMarks: { type: Number, required: true },
     solution: { data: Buffer, contentType: String, type: Object, name: String },
+    description: { type: String },
+    manualQuestion: { type: Boolean, required: true, default: false },
+    attachment: { data: Buffer, contentType: String, type: Object, name: String },
+
 
     participants: [{
         studentId: { type: Schema.Types.ObjectId, ref: "Student" },

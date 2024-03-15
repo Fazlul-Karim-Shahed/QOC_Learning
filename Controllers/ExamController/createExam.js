@@ -3,94 +3,140 @@ const { MCQModel } = require("../../Models/McqModel");
 const { BroadQuestionModel } = require("../../Models/BroadQuestionModel");
 const { cleanObject } = require("../cleanObject");
 const { generateRandValue } = require("../generateRandValue");
+const { IncomingForm } = require("formidable")
+const fs = require('fs');
+const { formDataToObj } = require("../formDataToObj");
 
 
 const createExam = async (req, res) => {
 
-    let query = {
-        curriculumId: req.body.curriculumId,
-        subjectId: req.body.subjectId
-    }
+    let form = new IncomingForm()
+    form.keepExtensions = true
 
-    let mcqsId = []
-    let broadQuestionsId = []
+    form.parse(req, (err, fields, files) => {
 
-    for (let i in cleanObject(req.body)) {
+        // console.log(fields)
 
-        if (i === 'chapterId') {
+        let examObj = cleanObject(formDataToObj(fields))
+        // console.log(examObj)
 
-            query = await { ...query, chapterId: cleanObject(req.body)[i] }
-        }
-        else if (i === 'moduleId') {
-            query = await { ...query, moduleId: cleanObject(req.body)[i] }
-
-        }
-
-        else continue
-    }
-
-
-    if (req.body.numberOfMcq != 0) {
-
-        let mcq = await MCQModel.find(query)
-
-        if (mcq && mcq.length >= req.body.numberOfMcq) {
-
-
-            for (let i = 0; i < req.body.numberOfMcq; i++) {
-
-                let mcqId = generateRandValue(mcq, mcqsId)
-                mcqsId.push(mcqId)
-            }
-
-        }
-        else {
-            return res.send({ message: 'Not enough mcq found. Please add more.', error: true })
-        }
-    }
-
-
-    if (req.body.numberOfBroadQuestion != 0) {
-
-        let broadQuestion = await BroadQuestionModel.find(query)
-
-        if (broadQuestion && broadQuestion.length >= req.body.numberOfBroadQuestion) {
-
-            for (let i = 0; i < req.body.numberOfBroadQuestion; i++) {
-
-                let broadQuestionId = generateRandValue(broadQuestion, broadQuestionsId)
-                broadQuestionsId.push(broadQuestionId)
-            }
-
+        if (err) {
+            return res.send({ message: 'Exam creation failed', error: true, data: err.message });
         }
         else {
 
-            return res.send({ message: 'Not enough broad question found. Please add more.', error: true })
+            let query = {
+                curriculumId: examObj.curriculumId,
+                subjectId: examObj.subjectId
+            }
+
+            for (let i in cleanObject(examObj)) {
+
+                if (i === 'chapterId') {
+
+                    query = { ...query, chapterId: cleanObject(examObj)[i] }
+                }
+                else if (i === 'moduleId') {
+                    query = { ...query, moduleId: cleanObject(examObj)[i] }
+
+                }
+
+                else continue
+
+            }
+
+
+
+            if (examObj.manualQuestion && files['attachment']) {
+
+                if (files['attachment'][0].size <= 15 * 1024 * 1024) {
+
+                    let x = new Promise(resolve => {
+
+                        fs.readFile(files['attachment'][0].filepath, (err, data) => {
+
+                            resolve({
+                                data: data,
+                                contentType: files['attachment'][0].mimetype,
+                                name: files['attachment'][0].originalFilename,
+                            })
+
+                        })
+                    })
+
+                    x.then(data => {
+
+
+
+                        let exam = new ExamModel({
+
+                            ...query,
+                            exam: examObj.exam,
+                            startTime: new Date(examObj.startTime).toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
+                            endTime: new Date(examObj.endTime).toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
+                            totalMarks: examObj.totalMarks,
+                            participants: [],
+                            attachment: data,
+                            manualQuestion: true,
+                            description: examObj.description
+                        })
+
+
+                        exam.save().then(data => {
+                            return res.send({ message: 'Exam created successfully', error: false, data: data });
+                        }).catch(err => {
+                            return res.send({ message: 'Exam creation failed', error: true, data: err.message });
+                        })
+                    })
+
+
+
+                }
+                else {
+                    return res.send({ message: 'File size should be less than 15MB', error: true, data: null })
+                }
+
+            }
+            else {
+                let exam = new ExamModel({
+
+                    ...query,
+                    exam: examObj.exam,
+                    mcqsId: examObj.mcqsId,
+                    broadQuestionsId: examObj.broadQuestionsId,
+                    startTime: new Date(examObj.startTime).toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
+                    endTime: new Date(examObj.endTime).toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
+                    negativeMarking: examObj.negativeMarking,
+                    perMcqMarks: examObj.perMcqMarks,
+                    totalMarks: examObj.totalMarks,
+                    participants: [],
+                })
+
+                exam.save().then(data => {
+                    return res.send({ message: 'Exam created successfully', error: false, data: data });
+                }).catch(err => {
+                    return res.send({ message: 'Exam creation failed', error: true, data: err.message });
+                })
+
+
+
+            }
+
+
+
 
         }
 
-    }
-
-
-    let exam = await new ExamModel({
-
-        ...query,
-        exam: req.body.exam,
-        mcqsId: mcqsId,
-        broadQuestionsId: broadQuestionsId,
-        startTime: new Date(req.body.startTime).toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
-        endTime: new Date(req.body.endTime).toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
-        negativeMarking: req.body.negativeMarking,
-        perMcqMarks: req.body.perMcqMarks,
-        totalMarks: req.body.totalMarks,
-        participants: [],
     })
 
-    exam.save().then(data => {
-        return res.send({ message: 'Exam created successfully', error: false, data: data });
-    }).catch(err => {
-        return res.send({ message: 'Exam creation failed', error: true, data: err.message });
-    })
+
+
+
+
+
+
+
+
 
 
 }

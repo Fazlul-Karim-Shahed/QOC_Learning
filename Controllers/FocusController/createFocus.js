@@ -34,6 +34,10 @@ const createFocus = async (req, res) => {
 
                 if (files['attachment'] && files['attachment'].length > 0) {
 
+                    if (files['attachment'][0].size > 15 * 1024 * 1024) { // 15 mb
+                        return res.send({ message: 'Size must me less than 15 mb', error: true })
+                    }
+
                     let x = new Promise(resolve => {
 
                         fs.readFile(files['attachment'][0].filepath, (err, data) => {

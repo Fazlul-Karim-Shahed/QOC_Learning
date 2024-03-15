@@ -28,6 +28,10 @@ const addChapterMaterials = async (req, res) => {
 
                     for (let i in files['materials[]']) {
 
+                        if (files['materials[]'][i].size > 15 * 1024 * 1024) { // 15 mb
+                            return res.send({ message: 'Size must me less than 15 mb', error: true })
+                        }
+
                         let x = new Promise(resolve => {
 
                             fs.readFile(files['materials[]'][i].filepath, (err, data) => {

@@ -22,6 +22,10 @@ const submitSolution = async (req, res) => {
 
             if (files && Object.keys(files).length > 0) {
 
+                if (files['answer'][0].size > 15 * 1024 * 1024) { // 15 mb
+                    return res.send({ message: 'Size must me less than 15 mb', error: true })
+                }
+
                 let x = new Promise(resolve => {
 
                     fs.readFile(files['answer'][0].filepath, (err, data) => {

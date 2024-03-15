@@ -31,7 +31,7 @@ const updateTeacherInfo = async (req, res) => {
 
             if (files && Object.keys(files).length > 0) {
 
-                if (files['image'][0].size > 1024 * 500) { // 700 kb
+                if (files['image'][0].size > 1024 * 500) { // 500 kb
                     return res.send({ message: 'Pictute size must me less than 500 kb', error: true })
                 }
                 else {

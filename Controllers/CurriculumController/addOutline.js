@@ -28,6 +28,10 @@ const addCurriculumOutlines = async (req, res) => {
 
                     for (let i in files['outlines[]']) {
 
+                        if (files['outlines[]'][i].size > 15 * 1024 * 1024) { // 500 kb
+                            return res.send({ message: 'Size must me less than 15 mb', error: true })
+                        }
+
                         let x = new Promise(resolve => {
 
                             fs.readFile(files['outlines[]'][i].filepath, (err, data) => {

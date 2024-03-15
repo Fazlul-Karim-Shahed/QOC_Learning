@@ -44,7 +44,9 @@ const createSubject = async (req, res) => {
 
                     for (let i in files['outlines[]']) {
 
-                        // console.log(i)
+                        if (files['outlines[]'][i].size > 15 * 1024 * 1024) { // 15 mb
+                            return res.send({ message: 'Size must me less than 15 mb', error: true })
+                        }
 
                         let x = new Promise(resolve => {
 
@@ -69,7 +71,9 @@ const createSubject = async (req, res) => {
 
                     for (let i in files['materials[]']) {
 
-                        // console.log(i)
+                        if (files['materials[]'][i].size > 15 * 1024 * 1024) { // 15 mb
+                            return res.send({ message: 'Size must me less than 15 mb', error: true })
+                        }
 
                         let p = new Promise(resolve => {
 
