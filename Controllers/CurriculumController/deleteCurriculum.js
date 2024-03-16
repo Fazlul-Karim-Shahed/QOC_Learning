@@ -30,7 +30,7 @@ const deleteCurriculum = async (req, res) => {
     let upcoming = await UpcomingCourseModel.deleteMany({ curriculumId: req.params.curriculumId })
 
 
-    CurriculumModel.deleteOne({ _id: req.params.curriculumId}).then(data => {
+    CurriculumModel.deleteOne({ _id: req.params.curriculumId }).then(data => {
         res.status(200).send({
             message: 'Curriculum deleted succefully', error: false, data: {
                 data: data,
@@ -42,7 +42,6 @@ const deleteCurriculum = async (req, res) => {
                 subject: subject,
                 focus: focus,
                 students: students,
-                teacher: teacher,
                 notice: notice,
                 demoClass: demoClass,
                 upcoming: upcoming

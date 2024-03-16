@@ -3,8 +3,6 @@ const { cleanObject } = require("../cleanObject");
 
 
 const createMcq = (req, res) => {
-    
-    // let obj = _.pick(req.body, ['chapterId', 'subjectId', 'curriculumId', 'moduleId', 'question', 'options', 'answer', 'hints', 'explanation', 'difficulty', 'tags'])
 
     let mcq = new MCQModel(cleanObject(req.body))
 
