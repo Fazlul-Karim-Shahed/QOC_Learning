@@ -10,7 +10,7 @@ const deleteModule = async (req, res) => {
     await ExamModel.deleteMany({ moduleId: req.params.moduleId })
     await MCQModel.deleteMany({ moduleId: req.params.moduleId })
     await BroadQuestionModel.deleteMany({ moduleId: req.params.moduleId })
-    await focusModel.deleteMany({ moduleId: req.params.moduleId })
+    await FocusModel.deleteMany({ moduleId: req.params.moduleId })
 
     ModuleModel.deleteOne({ _id: req.params.moduleId }).then(data => {
         res.status(200).send({ message: 'Module deleted ', error: false, data: data })

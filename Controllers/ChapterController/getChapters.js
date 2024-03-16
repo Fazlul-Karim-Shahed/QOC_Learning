@@ -8,11 +8,11 @@ const { ChapterModel } = require('../../Models/ChapterModel')
 const getChapters = async (req, res) => {
 
     let data = await jwt.verify(req.headers.authorization, process.env.SECRET_KEY)
-    
+
 
     if (data) {
         const user = await checkEmail(data.email)
-        
+
         if (user) {
             if (user.role != 'admin') {
 
@@ -38,6 +38,7 @@ const getChapters = async (req, res) => {
             }
             else {
                 ChapterModel.find({ subjectId: req.params.subjectId }).populate(['subjectId', 'curriculumId']).then(data => {
+                    console.log(data)
                     res.status(200).send({ message: 'All chapter ', error: false, data: data })
                 }).catch(err => {
                     res.send({ message: 'No chapter found', error: true, data: err })
