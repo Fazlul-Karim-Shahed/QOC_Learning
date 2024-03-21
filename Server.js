@@ -101,7 +101,7 @@ app.use((err, req, res, next) => {
 
 // ------------ Server ------------ //
 
-
-app.listen(3011, () => {
+const port = 3011
+app.listen(port, () => {
   console.log('Server is running on port ' + port);
 })
