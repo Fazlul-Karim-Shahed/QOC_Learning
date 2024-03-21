@@ -5,7 +5,7 @@
   "main": "Server.js",
   "scripts": {
     "test": "node Server.js",
-    "start": "node Server.js"
+    "start": "node Server.js -p 3011"
   },
   "engines": {
     "node": ">=18.16.1"
