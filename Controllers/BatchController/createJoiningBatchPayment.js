@@ -14,8 +14,6 @@ const createJoiningBatchPayment = async (req, res) => {
     let batch = await BatchModel.findOne({ _id: req.body.batchId })
     let student = await StudentModel.findOne({ _id: req.body.studentId })
 
-    console.log('Batch: ', batch)
-
     axios.post(process.env.bkash_createPaymentApi, {
         mode: '0000',
         payerReference: batch._id,
@@ -31,8 +29,6 @@ const createJoiningBatchPayment = async (req, res) => {
             'X-App-Key': process.env.bkash_app_key
         }
     }).then(data => {
-
-        console.log('See: ', data.data)
 
         if (data.data.statusMessage === "Successful") {
 
@@ -54,20 +50,20 @@ const createJoiningBatchPayment = async (req, res) => {
             }).then(tranData => {
                 res.send({ message: 'Payment Initiated', error: false, data: data.data })
             }).catch(err => {
-                console.log(err)
+                // console.log(err)
                 res.send({ message: 'Something went wrong while creating transaction model', error: true, data: err });
             })
 
 
         }
         else {
-            console.log(data.data)
+            // console.log(data.data)
             res.send({ message: `Something went wrong while initiating bkash payment - ${data.data.statusMessage}`, error: true, data: data.data });
         }
 
     }).catch(err => {
 
-        console.log(err)
+        // console.log(err)
         res.send({ message: 'Something went wrong while initiating bkash payment', error: true, data: err });
 
     })
