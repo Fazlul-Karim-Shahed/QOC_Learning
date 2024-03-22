@@ -14,6 +14,8 @@ const createJoiningBatchPayment = async (req, res) => {
     let batch = await BatchModel.findOne({ _id: req.body.batchId })
     let student = await StudentModel.findOne({ _id: req.body.studentId })
 
+    console.log('Batch: ', batch)
+
     axios.post(process.env.bkash_createPaymentApi, {
         mode: '0000',
         payerReference: batch._id,
