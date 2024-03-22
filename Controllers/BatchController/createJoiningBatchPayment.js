@@ -30,7 +30,6 @@ const createJoiningBatchPayment = async (req, res) => {
         }
     }).then(data => {
 
-
         if (data.data.statusMessage === "Successful") {
 
             TransactionModel.create({
@@ -51,18 +50,20 @@ const createJoiningBatchPayment = async (req, res) => {
             }).then(tranData => {
                 res.send({ message: 'Payment Initiated', error: false, data: data.data })
             }).catch(err => {
+                console.log(err)
                 res.send({ message: 'Something went wrong while creating transaction model', error: true, data: err });
             })
 
 
         }
         else {
+            console.log(data.data)
             res.send({ message: 'Something went wrong while initiating bkash payment', error: true, data: data.data });
         }
 
     }).catch(err => {
 
-        console.log(err.message)
+        console.log(err)
         res.send({ message: 'Something went wrong while initiating bkash payment', error: true, data: err });
 
     })
