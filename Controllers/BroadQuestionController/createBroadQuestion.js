@@ -77,7 +77,7 @@ const createBroadQuestion = (req, res) => {
             Promise.all(arr).then(data => {
                 broadQuestion['answerAttachment'] = data.filter(attachment => attachment.type === 'answerAttachment')[0]
                 broadQuestion['questionAttachment'] = data.filter(attachment => attachment.type === 'questionAttachment')[0]
-                
+
                 res.send({ message: 'Broad question created successfully', error: false, value: data });
                 broadQuestion.save().then(data => {
                 }
@@ -100,12 +100,6 @@ const createBroadQuestion = (req, res) => {
         }
 
     })
-
-
-
-
-
-
 
 
 }

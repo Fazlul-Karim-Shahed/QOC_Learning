@@ -9,8 +9,10 @@ const MCQModel = model('MCQ', new Schema({
     moduleId: { type: Schema.Types.ObjectId, ref: "Module" },
     
     question: { type: String, required: true },
+    questionAttachment: { contentType: String, type: Object, name: String },
     options: [{ option: String, value: String }],
     answer: { type: String, required: true },
+    answerAttachment: { contentType: String, type: Object, name: String },
     hints: { type: String },
     explanation: { type: String },
     difficulty: { type: String, required: true, default: 'easy', enum: ['easy', 'medium', 'hard'] },
