@@ -29,14 +29,12 @@ const getResource = async (req, res) => {
             // student / teacher
             resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
 
-
         }
     }
 
     else {
         // non-user
         resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
-
     }
 
 

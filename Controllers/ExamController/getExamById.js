@@ -20,7 +20,7 @@ const getExamById = async (req, res) => {
     }
     else {
 
-        ExamModel.find({}).populate(['subjectId', 'curriculumId', 'subjectId', 'moduleId', 'broadQuestionsId', 'mcqsId']).then(data => {
+        ExamModel.find({ $and: [{ endTime: { $gt: new Date(new Date() - (24 * 60 * 60 * 1000)) } }] }).populate(['subjectId', 'curriculumId', 'subjectId', 'moduleId', 'broadQuestionsId', 'mcqsId']).then(data => {
 
             let freeExam = []
             for (let i = 0; i < data.length; i++) {
