@@ -20,7 +20,7 @@ const router = require('express').Router()
 
 router.post('/', roleCheck('teacher'), premiumCheck('batch'), createBatch)
 router.post('/get', getAllBatch)
-router.delete('/:batchId', roleCheck('admin'), deleteBatch)
+router.delete('/:batchId', roleCheck('teacher'), deleteBatch)
 router.get('/enroll/:studentId', getEnrolledBatch)
 router.put('/enroll/:batchId', roleCheck('student'), enrollBatch)
 router.post('/join/payment', roleCheck('student'), bkashGrantToken(), createJoiningBatchPayment)
