@@ -12,9 +12,9 @@ const getResource = async (req, res) => {
 
     if (req.headers.authorization) {
 
-        data = await jwt.verify(req.headers.authorization, process.env.SECRET_KEY)
+        try{
+            data = await jwt.verify(req.headers.authorization, process.env.SECRET_KEY)
 
-        if (data) {
             if (data.role === 'admin') {
 
                 // admin
@@ -25,10 +25,10 @@ const getResource = async (req, res) => {
                 resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
 
             }
-        }
 
-        else {
-            // unauthorized
+            
+        }
+        catch(err){
             resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
         }
 
