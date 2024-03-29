@@ -8,34 +8,39 @@ const getResource = async (req, res) => {
     let resource
     let data
 
+    
+
     if (req.headers.authorization) {
+
         data = await jwt.verify(req.headers.authorization, process.env.SECRET_KEY)
-    }
-    else {
-        data = null
-    }
 
-    if (data) {
-        if (data.role === 'admin') {
+        if (data) {
+            if (data.role === 'admin') {
 
-            // admin
-            resource = await ResourceModel.find({}).populate(['curriculumId', 'subjectId'])
+                // admin
+                resource = await ResourceModel.find({}).populate(['curriculumId', 'subjectId'])
+            }
+            else {
+                // student / teacher
+                resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
 
-
-
+            }
         }
+
         else {
-
-            // student / teacher
+            // unauthorized
             resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
-
         }
-    }
 
+
+
+    }
     else {
         // non-user
         resource = await ResourceModel.find({ $and: [{ startTime: { $lte: new Date() } }, { endTime: { $gt: new Date() } }] }).populate(['curriculumId', 'subjectId'])
     }
+
+    
 
 
 
