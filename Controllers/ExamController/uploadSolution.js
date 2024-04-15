@@ -19,7 +19,8 @@ const uploadSolution = async (req, res) => {
 
 
         let x = new Promise((resolve) => {
-          const prefix = new Date().getTime() * Math.random()
+          // const prefix = new Date().getTime() * Math.random()
+          const prefix = ""
           const tempPath = files['solution'][0].filepath;
           const destinationPath = path.join(process.cwd(), "uploads", prefix + files['solution'][0].originalFilename);
 

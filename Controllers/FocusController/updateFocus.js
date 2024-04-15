@@ -39,7 +39,8 @@ const updateFocus = async (req, res) => {
 
                     let x = new Promise(resolve => {
 
-                        const prefix = new Date().getTime() * Math.random()
+                        // const prefix = new Date().getTime() * Math.random()
+                        const prefix = ""
                         const tempPath = files['attachment'][0].filepath;
                         const destinationPath = path.join(process.cwd(), "uploads", prefix + files['attachment'][0].originalFilename);
 

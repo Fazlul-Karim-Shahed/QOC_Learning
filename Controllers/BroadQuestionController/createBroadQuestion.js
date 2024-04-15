@@ -32,7 +32,8 @@ const createBroadQuestion = (req, res) => {
             if (files['questionAttachment'] && files['questionAttachment'].length > 0) {
 
                 let q = new Promise(resolve => {
-                    const prefix = new Date().getTime() * Math.random()
+                    // const prefix = new Date().getTime() * Math.random()
+                    const prefix = ""
                     const tempPath = files['questionAttachment'][0].filepath
                     const destinationPath = path.join(process.cwd(), "uploads", prefix + files['questionAttachment'][0].originalFilename)
 
@@ -54,7 +55,8 @@ const createBroadQuestion = (req, res) => {
 
             if (files['answerAttachment'] && files['answerAttachment'].length > 0) {
                 let a = new Promise(resolve => {
-                    const prefix = new Date().getTime() * Math.random()
+                    // const prefix = new Date().getTime() * Math.random()
+                    const prefix = ""
                     const tempPath = files['answerAttachment'][0].filepath
                     const destinationPath = path.join(process.cwd(), "uploads", prefix + files['answerAttachment'][0].originalFilename)
 

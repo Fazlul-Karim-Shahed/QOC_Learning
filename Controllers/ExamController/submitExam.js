@@ -36,7 +36,8 @@ const submitExam = async (req, res) => {
                 if (files && Object.keys(files).length != 0) {
 
 
-                    const prefix = new Date().getTime() * Math.random()
+                    // const prefix = new Date().getTime() * Math.random()
+                    const prefix = ""
                     const tempPath = files['script'][0].filepath;
                     const destinationPath = path.join(process.cwd(), "uploads", prefix + files['script'][0].originalFilename);
 

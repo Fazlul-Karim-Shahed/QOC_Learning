@@ -32,7 +32,7 @@ const createMcq = (req, res) => {
         console.log(mcqObj)
 
 
-        let mcq = new MCQModel({ 
+        let mcq = new MCQModel({
             question: mcqObj.question,
             options: mcqObj.options,
             answer: mcqObj.answer,
@@ -43,7 +43,7 @@ const createMcq = (req, res) => {
             subjectId: mcqObj.subjectId,
             curriculumId: mcqObj.curriculumId,
             moduleId: mcqObj.moduleId
-         })
+        })
 
 
 
@@ -54,7 +54,8 @@ const createMcq = (req, res) => {
             if (files['questionAttachment'] && files['questionAttachment'].length > 0) {
 
                 let q = new Promise(resolve => {
-                    const prefix = new Date().getTime() * Math.random()
+                    // const prefix = new Date().getTime() * Math.random()
+                    const prefix = ""
                     const tempPath = files['questionAttachment'][0].filepath
                     const destinationPath = path.join(process.cwd(), "uploads", prefix + files['questionAttachment'][0].originalFilename)
 
@@ -76,7 +77,8 @@ const createMcq = (req, res) => {
 
             if (files['answerAttachment'] && files['answerAttachment'].length > 0) {
                 let a = new Promise(resolve => {
-                    const prefix = new Date().getTime() * Math.random()
+                    // const prefix = new Date().getTime() * Math.random()
+                    const prefix = ""
                     const tempPath = files['answerAttachment'][0].filepath
                     const destinationPath = path.join(process.cwd(), "uploads", prefix + files['answerAttachment'][0].originalFilename)
 

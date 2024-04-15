@@ -21,7 +21,7 @@ const getModules = async (req, res) => {
 
                 if (user.toObject().hasOwnProperty('course') && user.course.isPremium) {
 
-                    ModuleModel.find({ chapterId: req.params.chapterId }).populate(['subjectId', 'curriculumId', 'chapterId']).then(data => {
+                    ModuleModel.find({ chapterId: req.params.chapterId }).populate(['subjectId', 'curriculumId', 'chapterId']).sort({ createdAt : -1}).then(data => {
 
                         res.status(200).send({ message: 'All module ', error: false, data: data })
 
@@ -32,7 +32,7 @@ const getModules = async (req, res) => {
 
                 }
                 else {
-                    ModuleModel.find({ chapterId: req.params.chapterId, paid: false }).populate(['subjectId', 'curriculumId', 'chapterId']).then(data => {
+                    ModuleModel.find({ chapterId: req.params.chapterId, paid: false }).populate(['subjectId', 'curriculumId', 'chapterId']).sort({ createdAt: -1 }).then(data => {
 
                         res.status(200).send({ message: 'All module ', error: false, data: data })
 
@@ -47,7 +47,7 @@ const getModules = async (req, res) => {
             }
             else {
 
-                ModuleModel.find({ chapterId: req.params.chapterId }).populate(['subjectId', 'curriculumId', 'chapterId']).then(data => {
+                ModuleModel.find({ chapterId: req.params.chapterId }).populate(['subjectId', 'curriculumId', 'chapterId']).sort({ createdAt : -1}).then(data => {
 
                     res.status(200).send({ message: 'All module ', error: false, data: data })
 

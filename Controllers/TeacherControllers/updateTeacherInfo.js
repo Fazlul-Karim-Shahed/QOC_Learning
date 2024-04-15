@@ -38,7 +38,8 @@ const updateTeacherInfo = async (req, res) => {
                 else {
                     let x = new Promise(resolve => {
 
-                        const prefix = new Date().getTime() * Math.random()
+                        // const prefix = new Date().getTime() * Math.random()
+                        const prefix = ""
                         const tempPath = files['image'][0].filepath;
                         const destinationPath = path.join(process.cwd(), "uploads", prefix + files['image'][0].originalFilename);
 

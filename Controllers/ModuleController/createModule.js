@@ -40,7 +40,8 @@ const createModule = async (req, res) => {
 
                         let x = new Promise(resolve => {
 
-                            const prefix = new Date().getTime() * Math.random()
+                            // const prefix = new Date().getTime() * Math.random()
+                            const prefix = ""
                             const tempPath = files['materials[]'][i].filepath;
                             const destinationPath = path.join(process.cwd(), "uploads", prefix + files['materials[]'][i].originalFilename);
 
