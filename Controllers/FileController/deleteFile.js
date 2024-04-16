@@ -4,8 +4,6 @@ const path = require("path")
 
 const deleteFile = async (req, res) => {
 
-    console.log(req.params)
-
     let fileName = req.params.filename
     let filePath = path.join(process.cwd(), "uploads", fileName)
 
